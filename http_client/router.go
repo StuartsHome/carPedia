@@ -11,5 +11,6 @@ func Router() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/home", service.HomeHandler)
+	r.HandleFunc("/car", service.GetCarHandler)
 	http.ListenAndServe(":8100", r)
 }

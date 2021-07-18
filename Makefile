@@ -35,3 +35,6 @@ test-coverage:
 
 exec:
 	docker exec -it carpedia_server_1 bash
+
+GOGEN = go generate
+include mock.mk

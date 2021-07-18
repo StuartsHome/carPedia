@@ -6,6 +6,8 @@ import (
 	"github.com/stuartshome/carpedia/model"
 )
 
+//go:generate go run "github.com/vektra/mockery/cmd/mockery" -case=underscore -outpkg mock_store -output ../mock/mock_store -name=Store
+
 type Store interface {
 	CreateCar(car *model.Car) error
 	GetCars() ([]*model.Car, error)
@@ -15,7 +17,8 @@ type dbStore struct {
 	db *sql.DB
 }
 
-// var _ = *Store{}
+// The dbStore struct will implement the Store interface
+// var _ Store = &dbStore{}
 
 func (store *dbStore) CreateCar(car *model.Car) error {
 	_, err := store.db.Query("INSERT INTO cars(make, model) VALUES ($1, $2)", car.Make, car.Model)
@@ -40,8 +43,11 @@ func (store *dbStore) GetCars() ([]*model.Car, error) {
 	return cars, nil
 }
 
-var store Store
+// Package level variable that will be available for use
+// throughout our application code.
+var PackStore Store
 
+// We call this method to initialise the store
 func InitStore(s Store) {
-	store = s
+	PackStore = s
 }
