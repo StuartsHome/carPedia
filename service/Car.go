@@ -6,12 +6,13 @@ import (
 	"net/http"
 
 	"github.com/stuartshome/carpedia/model"
-	"github.com/stuartshome/carpedia/store"
+	// "github.com/stuartshome/carpedia/store"
+	aa "github.com/stuartshome/carpedia/store"
 )
 
 func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 
-	cars, err := store.PackStore.GetCars()
+	cars, err := aa.PackStore.GetCars()
 	carListBytes, err := json.Marshal(cars)
 
 	if err != nil {
@@ -34,7 +35,7 @@ func CreateBirdHandler(w http.ResponseWriter, r *http.Request) {
 
 	car.Make = r.Form.Get("make")
 	car.Model = r.Form.Get("model")
-	err = store.PackStore.CreateCar(&car)
+	err = aa.PackStore.CreateCar(&car)
 	if err != nil {
 		fmt.Println(err)
 	}
