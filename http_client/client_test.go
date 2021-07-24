@@ -9,7 +9,7 @@ import (
 	"github.com/stuartshome/carpedia/service"
 )
 
-func TestClient(t *testing.T) {
+func TestHealthCheckHandler(t *testing.T) {
 	// A new http request, this request is passed to the handler
 	req, err := http.NewRequest("GET", "", nil)
 	if err != nil {
@@ -21,7 +21,7 @@ func TestClient(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	// This is the handler func we want to test
-	hf := http.HandlerFunc(service.GetCarHandler)
+	hf := http.HandlerFunc(service.HealthCheckHandler)
 
 	// Serve the HTTP request to the recorder
 	// This line executes the handler
@@ -34,7 +34,7 @@ func TestClient(t *testing.T) {
 	}
 
 	// Check the response body is correct
-	expected := `Hello World!`
+	expected := "{\"status\":\"OK\",\"host\":\"aa\"}\n"
 	actual := recorder.Body.String()
 	assert.Equal(t, expected, actual)
 
