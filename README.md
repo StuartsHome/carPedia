@@ -8,4 +8,5 @@ Under development, mostly on weekends
 - Containerised
 - Static web page (HTML, JS)
 - Shell scripts
+- Logging
 
