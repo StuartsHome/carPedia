@@ -1,11 +1,11 @@
 wikipedia for cars
 
+Under development, mostly on weekends
 
-
-## To do :wrench: 
-- DB for sql commands
-- Makefile
-    - Exec command
-- Docker Container
-- Logging in container
+## Features
+- MySQL Database
+- Makefile w/ make commands
+- Containerised
+- Static web page (HTML, JS)
+- Shell scripts
 

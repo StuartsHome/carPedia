@@ -39,5 +39,7 @@ func CreateBirdHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	http.Redirect(w, r, "/assets", http.StatusFound)
+	model.Cars = append(model.Cars, car)
+
+	http.Redirect(w, r, "/assets/", http.StatusFound)
 }

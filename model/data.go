@@ -9,3 +9,5 @@ type Car struct {
 	Model string `json:"model"`
 	Reg   int    `json:"reg"`
 }
+
+var Cars []Car

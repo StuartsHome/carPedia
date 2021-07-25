@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<head>
+    <title>The car encyclopedia</title>
+</head>
+
+<body> 
+    <h1>carPedia</h1>
+    <table>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Reg</th>
+        </tr>
+        <td>Ford</td>
+        <td>Fiesta</td>
+        <td>STU 1111</td>
+        <tr></tr>
+        <td>Citroen</td>
+        <td>C3</td>
+        <td>TUX 61TUV</td>
+    </table>
+    <br/>
+
+    <form action="/car" method="post">
+        Make:
+        <input type="text" name="make">
+        <br/> Model:
+        <input type="text" name="model">
+        <br/> Reg
+        <input type="text" name="reg">
+        <br/>
+        <input type="submit" name="Submit">
+    </form>
+    <script>
+        carTable = document.querySelector("table")
+        fetch("/car")
+            .then(response => response.json())
+            .then(carList => {
+                carList.forEach(car => {
+                    row = document.createElement("tr")
+                    make = document.CreateElement("td")
+                    make.innerHTML = car.make
+                    model = document.CreateElement("td")
+                    model.innerHTML = car.model
+                    reg = document.CreateElement("td")
+                    reg.innerHTML = car.reg
+                    
+                    row.appendChild(make)
+                    row.appendChild(model)
+                    row.appendChild(reg)
+
+                    carTable.appendChild(row)
+                    
+                })
+            })
+    </script>
+</body>
+
