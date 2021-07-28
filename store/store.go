@@ -21,12 +21,12 @@ type dbStore struct {
 // var _ Store = &dbStore{}
 
 func (store *dbStore) CreateCar(car *model.Car) error {
-	_, err := store.db.Query("INSERT INTO cars(make, model) VALUES ($1, $2)", car.Make, car.Model)
+	_, err := store.db.Query("INSERT INTO cars(make, model, reg) VALUES ($1, $2, $3)", car.Make, car.Model, car.Reg)
 	return err
 }
 
 func (store *dbStore) GetCars() ([]*model.Car, error) {
-	rows, err := store.db.Query("SELECT make, model from cars")
+	rows, err := store.db.Query("SELECT make, model, reg from cars")
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (store *dbStore) GetCars() ([]*model.Car, error) {
 	cars := []*model.Car{}
 	for rows.Next() {
 		car := &model.Car{}
-		if err := rows.Scan(&car.Make, &car.Model); err != nil {
+		if err := rows.Scan(&car.Make, &car.Model, &car.Reg); err != nil {
 			return nil, err
 		}
 		cars = append(cars, car)
