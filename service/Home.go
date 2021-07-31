@@ -43,12 +43,10 @@ func JsonResponse() (model.Response, error) {
 			model.Car{
 				Model: "Ford",
 				Make:  "Fiesta",
-				Reg:   1980,
 			},
 			model.Car{
 				Model: "Ford",
 				Make:  "Mondeo",
-				Reg:   1995,
 			},
 		},
 	}

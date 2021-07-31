@@ -19,8 +19,7 @@ func TestGetCarsHandler(t *testing.T) {
 
 	mockStore.On("GetCars").Return([]*model.Car{
 		{Make: "citroen",
-			Model: "c3",
-			Reg:   123},
+			Model: "c3"},
 	}, nil).Once()
 
 	req, err := http.NewRequest("GET", "", nil)
@@ -36,7 +35,7 @@ func TestGetCarsHandler(t *testing.T) {
 			status, http.StatusOK)
 	}
 	expected := []model.Car{
-		{"citroen", "c3", 123},
+		model.Car{Make: "citroen", Model: "c3"},
 		// model.Car{"ford", "fiesta", 234},
 	}
 	c := []model.Car{}

@@ -10,6 +10,9 @@ import (
 )
 
 func GetCarHandler(w http.ResponseWriter, r *http.Request) {
+	// Call store GetCars()
+	// Marshal the value into JSON
+	// Write the JSON to the Response
 
 	cars, err := store.PackStore.GetCars()
 	carListBytes, err := json.Marshal(cars)
@@ -23,6 +26,11 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateBirdHandler(w http.ResponseWriter, r *http.Request) {
+	// The HTML information is sent to us in HTML form
+	// ParseForm parses the data
+	// Query the form for the two fields
+	// Append the values to the list of cars
+	// Redirect the user to the original HTML page
 	car := model.Car{}
 
 	err := r.ParseForm()
@@ -38,7 +46,6 @@ func CreateBirdHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	model.Cars = append(model.Cars, car)
 
 	http.Redirect(w, r, "/assets/", http.StatusFound)
 }

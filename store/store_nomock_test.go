@@ -10,7 +10,7 @@ import (
 
 type StoreSuite struct {
 	suite.Suite
-	store *dbStore
+	store *DbStore
 	db    *sql.DB
 }
 
@@ -28,7 +28,7 @@ func (s *StoreSuite) SetupSuite() {
 		s.T().Fatal(err)
 	}
 	s.db = db
-	s.store = &dbStore{db: db}
+	s.store = &DbStore{Db: db}
 }
 
 func (s *StoreSuite) SetupTest() {

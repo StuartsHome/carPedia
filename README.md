@@ -10,3 +10,12 @@ Under development, mostly on weekends
 - Shell scripts
 - Logging
 
+
+
+
+To do:
+Frontend (improve)
+Database (tidy up)
+Concurrency (calls to db)
+flags
+context

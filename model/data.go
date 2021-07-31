@@ -7,7 +7,7 @@ type Response struct {
 type Car struct {
 	Make  string `json:"make"`
 	Model string `json:"model"`
-	Reg   int    `json:"reg"`
+	Reg   *int   `json:"reg"`
 }
 
 var Cars []Car
