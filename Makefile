@@ -2,16 +2,22 @@ UID=$(shell id -u)
 GID=$(shell id -g)
 
 DOCKER_CMD = docker-compose
-DOCKER_CMD_RUN = $(DOCKER_CMD) run -u $(UID):$(GID)
+DOCKER_CMD_RUN = $(DOCKER_CMD) run #-u $(UID):$(GID)
 DOCKER_CMD_START = $(DOCKER_CMD) up -d server
 RUN_IN_DEV = $(DOCKER_CMD_RUN) --rm server
+
+export COMPOSE_PROJECT_NAME=carpedia
 
 build: docker
 	$(RUN_IN_DEV) go build -mod=readonly -o main.go
 
 .PHONY: docker-start
-docker-start: docker-build
+docker-start: docker-build docker-db
 	$(DOCKER_CMD_START)
+
+.PHONY: docker-db
+docker-db:
+	$(RUN_IN_DEV) -p 3306:3306 database
 
 .PHONY: docker-build
 docker-build:

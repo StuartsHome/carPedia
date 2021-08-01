@@ -23,7 +23,7 @@ func newRouter() *mux.Router {
 
 	r.HandleFunc("/home", service.HomeHandler)
 	r.HandleFunc("/car", service.GetCarHandler).Methods("GET")
-	r.HandleFunc("/car", service.CreateBirdHandler).Methods("POST")
+	r.HandleFunc("/car", service.CreateCarHandler).Methods("POST")
 
 	//Healthcheck
 	r.HandleFunc("/health", service.HealthCheckHandler)

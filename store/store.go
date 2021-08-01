@@ -43,6 +43,14 @@ func (store *DbStore) GetCars() ([]*model.Car, error) {
 	return cars, nil
 }
 
+func deleteCar() {
+
+}
+
+func updateCar() {
+
+}
+
 // Package level variable that will be available for use
 // throughout our application code.
 var PackStore Store

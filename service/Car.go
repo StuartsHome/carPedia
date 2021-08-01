@@ -25,7 +25,7 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(carListBytes)
 }
 
-func CreateBirdHandler(w http.ResponseWriter, r *http.Request) {
+func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 	// The HTML information is sent to us in HTML form
 	// ParseForm parses the data
 	// Query the form for the two fields

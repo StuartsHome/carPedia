@@ -9,6 +9,8 @@ services:
   server:
     extends:
       service: builder
+    depends_on:
+      - database
     command: [
       "go", "run", "main.go"
       ]
@@ -16,3 +18,26 @@ services:
         HTTP_ADDR: 0.0.0.0:8100
     ports:
         - 8100:8100
+    volumes:
+      - ".:/src"  # map current directory on host to /src in container
+  database:
+    image: mysql
+    env_file:
+       - script_config.env
+    restart: always
+    ports:
+       - "3306:3306"
+    # volumes:
+    #   #  - "mysql:/var/lib/mysql"
+# volumes:
+#   mysql:
+
+
+# Server uses a host volume:
+# Host volumes: these map a path from the host into the container with a bind mount.
+# They have the short syntax /path/on/host:/path/in/container.
+# Whatever exists on the host is what will be visible in the container, there's no merging of files or initialization from the image,
+# and uid/gid's do not get any special mapping so you need to take care to allow the container uid/gid read and write access
+# to this location (an exception is Docker for Mac with OSXFS).
+# If the path on the host does not exist, docker will create an empty directory as root, and if it is a file,
+# you can mount a single file into the container this way.

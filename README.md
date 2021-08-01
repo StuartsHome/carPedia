@@ -15,7 +15,7 @@ Under development, mostly on weekends
 
 To do:
 Frontend (improve)
-Database (tidy up)
+Database (docker container)
 Concurrency (calls to db)
 flags
 context
