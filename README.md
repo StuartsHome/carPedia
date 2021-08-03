@@ -11,15 +11,26 @@ Under development, mostly on weekends
 - Logging
 
 
-
-
-To do:
-Frontend (improve)
-Database (docker container)
-Concurrency (calls to db)
-flags
-context
-
+### To do :wrench:
+- Update readme w/make commands
+- update makefile
+    - create server with a controllable name, not "carpedia_server_run_e95dd6243e95"
+    - make docker-start should start the service in detached mode
+- update database w/ update and delete commands
+- update frontend to look better
+- service should use concurrency to query the db
+    - frontend should display a graph of metrics
+        - how many workers, how many free workers
+        - average time per worker
+- database should have more tables
+- add flags
+- add context
+- Logging needs improvement
+    - logging module
+    - log the port service is running on
+    - log better errors
+    - 
+- More tests!!!
 
 
 Vscode:
