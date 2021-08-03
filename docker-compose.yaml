@@ -14,10 +14,8 @@ services:
     command: [
       "go", "run", "main.go"
       ]
-    environment:
-        HTTP_ADDR: 0.0.0.0:8100
     ports:
-        - 8100:8100
+      - "8100:8100"
     volumes:
       - ".:/src"  # map current directory on host to /src in container
   database:

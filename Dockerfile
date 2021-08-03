@@ -1,7 +1,7 @@
 # sets the base image
 FROM golang:1.16 AS base
 
-ENV GOSUMDB="off"
+# ENV GONOSUMDB="off"
 ENV HOME=/usr/home
 ENV GOROOT="/usr/local/go"
 ENV GOPATH=$HOME/go

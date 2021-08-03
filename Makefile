@@ -12,7 +12,7 @@ build: docker
 	$(RUN_IN_DEV) go build -mod=readonly -o main.go
 
 .PHONY: docker-start
-docker-start: docker-db docker-build
+docker-start: docker-build
 	$(DOCKER_CMD_START)
 
 .PHONY: docker-db
@@ -21,7 +21,7 @@ docker-db:
 
 .PHONY: docker-build
 docker-build:
-	$(DOCKER_CMD) build
+	$(RUN_IN_DEV)
 
 .PHONY: docker-stop
 docker-stop:
@@ -29,6 +29,9 @@ docker-stop:
 
 docker-clean:
 	$(DOCKER_CMD) down -v --remove-orphans || true
+
+run-docker:
+	$(DOCKER_CMD) run -d -p 8100:8100 --rm server go run main.go
 
 .PHONY: test test-unit
 test: test-unit
