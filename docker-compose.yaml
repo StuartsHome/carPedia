@@ -27,10 +27,11 @@ services:
     restart: always
     ports:
        - "3306:3306"
-    # volumes:
-    #   #  - "mysql:/var/lib/mysql"
-# volumes:
-#   mysql:
+    volumes:
+       - "mysql:/var/lib/mysql"
+       - "./sql:/docker-entrypoint-initdb.d"
+volumes:
+  mysql:
 
 
 # Server uses a host volume:

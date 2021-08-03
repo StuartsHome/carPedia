@@ -12,12 +12,12 @@ build: docker
 	$(RUN_IN_DEV) go build -mod=readonly -o main.go
 
 .PHONY: docker-start
-docker-start: docker-build docker-db
+docker-start: docker-db docker-build
 	$(DOCKER_CMD_START)
 
 .PHONY: docker-db
 docker-db:
-	$(RUN_IN_DEV) -p 3306:3306 database
+	$(DOCKER_CMD_RUN) --name $(COMPOSE_PROJECT_NAME)_database -d -p 3306:3306 database
 
 .PHONY: docker-build
 docker-build:

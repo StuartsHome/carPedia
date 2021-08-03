@@ -19,3 +19,10 @@ Database (docker container)
 Concurrency (calls to db)
 flags
 context
+
+
+
+Vscode:
+Trigger suggest = cmd + i
+Find with selection = cmd + e
+Change focus = cmd + l
