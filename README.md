@@ -27,10 +27,8 @@ Under development, mostly on weekends
 - add flags
 - add context
 - Logging needs improvement
-    - logging module
     - log the port service is running on
     - log better errors
-    - 
 - More tests!!!
 - cache (redis, elastic)
 

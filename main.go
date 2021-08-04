@@ -9,6 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"github.com/stuartshome/carpedia/http_client"
+	"github.com/stuartshome/carpedia/logging"
 	"github.com/stuartshome/carpedia/store"
 )
 
@@ -34,6 +35,7 @@ func main() {
 	}
 	store.InitStore(&store.DbStore{Db: db})
 
+	logging.InitLogger()
 	fmt.Println("Service starting...")
 	http_client.Router()
 }
