@@ -16,6 +16,7 @@ Under development, mostly on weekends
 - update makefile
     - create server with a controllable name, not "carpedia_server_run_e95dd6243e95"
     - make docker-start should start the service in detached mode
+    - make docker-start, service doesn't run on a port
 - update database w/ update and delete commands
 - update frontend to look better
 - service should use concurrency to query the db
@@ -31,6 +32,7 @@ Under development, mostly on weekends
     - log better errors
     - 
 - More tests!!!
+- cache (redis, elastic)
 
 
 Vscode:
