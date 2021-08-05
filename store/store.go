@@ -3,15 +3,11 @@ package store
 import (
 	"database/sql"
 
+	"github.com/stuartshome/carpedia/logging"
 	"github.com/stuartshome/carpedia/model"
 )
 
 //go:generate go run "github.com/vektra/mockery/cmd/mockery" -case=underscore -outpkg mock_store -output ../mock/mock_store -name=Store
-
-type Store interface {
-	CreateCar(car *model.Car) error
-	GetCars() ([]*model.Car, error)
-}
 
 type DbStore struct {
 	Db *sql.DB
@@ -22,6 +18,7 @@ type DbStore struct {
 
 func (store *DbStore) CreateCar(car *model.Car) error {
 	_, err := store.Db.Query("INSERT INTO cars(make, model) VALUES (?,?)", car.Make, car.Model)
+	logging.Logf("storing in db: %v & %v", car.Make, car.Model)
 	return err
 }
 

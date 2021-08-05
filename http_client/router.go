@@ -5,9 +5,11 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/service"
+	// "github.com/stuartshome/carpedia/settings"
 )
 
 func Router() {
+	// config := settings.Get()
 	r := newRouter()
 
 	http.ListenAndServe(":8100", r)

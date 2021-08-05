@@ -1,3 +1,4 @@
 script_config.env
 /readers
 docker-compose.override.yaml
+/log

@@ -33,6 +33,11 @@ Under development, mostly on weekends
 - cache (redis, elastic)
 
 
+# Bug
+- database - container uses different user and password credentials and required manual setup
+this should be automated
+- database - uri are different for local and container
+
 Vscode:
 Trigger suggest = cmd + i
 Find with selection = cmd + e

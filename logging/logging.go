@@ -96,7 +96,8 @@ func (logger *Logger) createLogFile() (*os.File, error) {
 		}
 	}
 	// Join the filepath, pass into OpenFile as name
-	// 060 is for a readable+writable file
+	// 0600 is for a user readable+writable file
+	// 0644 is for a user readable+writable file and group readable file
 	return os.OpenFile(filepath.Join(logger.fileDirectory, fmt.Sprintf("scs-log-%v.log", logger.fileDate)),
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
 }
