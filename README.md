@@ -18,6 +18,7 @@ Under development, mostly on weekends
     - make docker-start should start the service in detached mode
     - make docker-start, service doesn't run on a port
 - update database w/ update and delete commands
+    - stats for db
 - update frontend to look better
 - service should use concurrency to query the db
     - frontend should display a graph of metrics
@@ -31,6 +32,7 @@ Under development, mostly on weekends
     - log better errors
 - More tests!!!
 - cache (redis, elastic)
+
 
 
 # Bug

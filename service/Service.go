@@ -1,4 +1,7 @@
 package service
 
-type Service interface {
+import "github.com/stuartshome/carpedia/store"
+
+type Service struct {
+	Store store.Store
 }
