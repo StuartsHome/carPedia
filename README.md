@@ -47,3 +47,5 @@ Vscode:
 Trigger suggest = cmd + i
 Find with selection = cmd + e
 Change focus = cmd + l
+
+Atoi (string to int) and Itoa (int to string).

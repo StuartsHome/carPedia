@@ -1,36 +1,21 @@
 package service
 
-import (
-	"bytes"
-	"encoding/json"
-	"net/http"
-	"net/http/httptest"
-	"net/url"
-	"strconv"
-	"testing"
-
-	"github.com/stretchr/testify/assert"
-	"github.com/stuartshome/carpedia/model"
-	"github.com/stuartshome/carpedia/store"
-)
-
-func newCreateCarForm() *url.Values {
+/*
+func newCreateCarForm2() *url.Values {
 	form := url.Values{}
 	form.Set("make", "ford")
 	form.Set("model", "mustang")
 	return &form
 }
 
-func TestCreateCar(t *testing.T) {
+func TestCreateCar2(t *testing.T) {
 	// Given
-	// var mockStore = new(mock_store.Store)
 	// var mockStore mock_store.Store = mock_store.Store{}
-	// mockStore2 := store.InitStore(&mockStore)
-	mockStore := store.InitMockStore()
+	var mockStore = new(mock_store.Store)
 
 	testData := model.Car{
-		Make:  "ford",
-		Model: "mustang",
+		Make:  "Citroen",
+		Model: "c3",
 	}
 
 	// json := `{"car": {"make": "ford", "model": "mustang"}}`
@@ -53,7 +38,7 @@ func TestCreateCar(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	hf := http.HandlerFunc(CreateCarHandler)
 	hf.ServeHTTP(recorder, req2)
-	if status := recorder.Code; status != http.StatusFound {
+	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
@@ -61,10 +46,11 @@ func TestCreateCar(t *testing.T) {
 
 }
 
-func TestGetCarsHandler(t *testing.T) {
+func TestGetCarsHandler2(t *testing.T) {
 	// Initialise the mock store
-	// var mockStore mock_store.Store = mock_store.Store{}
-	mockStore := store.InitMockStore()
+	var mockStore mock_store.Store = mock_store.Store{}
+	// var mockClient mock_client.Client = mock_client.Client{}
+
 	mockStore.On("GetCars").Return([]*model.Car{
 		{
 			Make:  "Citroen",
@@ -76,7 +62,7 @@ func TestGetCarsHandler(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
+	// var store12 Store
 	recorder := httptest.NewRecorder()
 	hf := http.HandlerFunc(GetCarHandler)
 	hf.ServeHTTP(recorder, req)
@@ -84,8 +70,10 @@ func TestGetCarsHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
-	expected := model.Car{Make: "Citroen", Model: "c3"}
-
+	expected := []model.Car{
+		model.Car{Make: "citroen", Model: "c3"},
+		// model.Car{"ford", "fiesta", 234},
+	}
 	c := []model.Car{}
 	err = json.NewDecoder(recorder.Body).Decode(&c)
 	if err != nil {
@@ -95,6 +83,7 @@ func TestGetCarsHandler(t *testing.T) {
 	assert.Equal(t, expected, actual)
 
 }
+*/
 
 // json := `{}`
 // r := ioutil.NopCloser(bytes.NewReader([]byte(json)))

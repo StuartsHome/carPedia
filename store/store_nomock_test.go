@@ -2,8 +2,10 @@ package store
 
 import (
 	"database/sql"
+	"fmt"
 	"testing"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/stretchr/testify/suite"
 	"github.com/stuartshome/carpedia/model"
 )
@@ -22,7 +24,10 @@ func (s *StoreSuite) SetupSuite() {
 		and stored as an instance variable,
 		as is the higher level "store", that wraps the "db"
 	*/
-	connString := "dbname<youre test db name> sslmode=disable"
+
+	// dbname :=
+	// pass :=
+	connString := fmt.Sprintf("root:%v@tcp(127.0.0.1:3306)/%v", pass, dbname)
 	db, err := sql.Open("mysql", connString)
 	if err != nil {
 		s.T().Fatal(err)

@@ -2,3 +2,5 @@ script_config.env
 /reader
 docker-compose.override.yaml
 /log
+/.github
+/.vscode

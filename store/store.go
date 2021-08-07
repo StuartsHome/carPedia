@@ -7,8 +7,6 @@ import (
 	"github.com/stuartshome/carpedia/model"
 )
 
-//go:generate go run "github.com/vektra/mockery/cmd/mockery" -case=underscore -outpkg mock_store -output ../mock/mock_store -name=Store
-
 type DbStore struct {
 	Db *sql.DB
 }
