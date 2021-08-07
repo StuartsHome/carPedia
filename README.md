@@ -1,4 +1,5 @@
-wikipedia for cars
+![Build Status](https://github.com/StuartsHome/carPedia/actions/workflows/go.yml/badge.svg)  
+# wikipedia for cars
 
 Under development, mostly on weekends
 
@@ -20,6 +21,8 @@ Under development, mostly on weekends
 - update database w/ update and delete commands
     - stats for db
 - update frontend to look better
+    - frontend includes button to get all results from db
+    - button dynamically populates a table
 - service should use concurrency to query the db
     - frontend should display a graph of metrics
         - how many workers, how many free workers
