@@ -42,6 +42,7 @@ Under development, mostly on weekends
         - how many workers, how many free workers
         - average time per worker
 - database should have more tables
+    - Database tests should be integration tests
 - add flags
 - add context
 - Logging needs improvement

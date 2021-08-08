@@ -14,7 +14,7 @@ func newRouter() *mux.Router {
 	r := mux.NewRouter()
 
 	//Html page
-	staticFileDirectory := http.Dir("./assets/")
+	staticFileDirectory := http.Dir("assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 

@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -48,17 +49,21 @@ func TestHealthCheckHandler(t *testing.T) {
 }
 
 func TestStaticFileServer(t *testing.T) {
+	if err := os.Chdir("../"); err != nil {
+		panic(err)
+	}
 	r := newRouter()
 
 	mockServer := httptest.NewServer(r)
+	defer mockServer.Close()
 	mockServer.URL = "http://127.0.0.1:8100"
 
-	request, err := http.NewRequest("GET", mockServer.URL+"/assets/", nil)
-	request.Header.Set("Accept", "text/html; charset=utf-8")
-	client := http.Client{}
-	response, _ := client.Do(request)
+	// request, _ := http.NewRequest("GET", mockServer.URL+"/assets/", nil)
+	// request.Header.Set("Accept", "text/html; charset=utf-8")
+	// client := http.Client{}
+	// response, _ := client.Do(request)
 
-	// response, err := http.Get(mockServer.URL + "/assets/")
+	response, err := http.Get(mockServer.URL + "/assets/")
 	t.Log(response.Request.URL)
 	t.Log(response.Header)
 	if err != nil {
