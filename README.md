@@ -35,6 +35,7 @@ Under development, mostly on weekends
     - log better errors
 - More tests!!!
 - cache (redis, elastic)
+- Table driven tests for database (not handlers)
 
 
 

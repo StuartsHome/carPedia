@@ -4,3 +4,4 @@ docker-compose.override.yaml
 /log
 /.github
 /.vscode
+/tmp
