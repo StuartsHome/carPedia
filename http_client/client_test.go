@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -49,9 +48,9 @@ func TestHealthCheckHandler(t *testing.T) {
 }
 
 func TestStaticFileServer(t *testing.T) {
-	if err := os.Chdir("../"); err != nil {
-		panic(err)
-	}
+	// if err := os.Chdir("../"); err != nil {
+	// 	panic(err)
+	// }
 	r := newRouter()
 
 	mockServer := httptest.NewServer(r)

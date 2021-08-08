@@ -6,7 +6,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/service"
 	"github.com/stuartshome/carpedia/settings"
-	// "github.com/stuartshome/carpedia/settings"
 )
 
 func newRouter() *mux.Router {
@@ -33,8 +32,8 @@ func newRouter() *mux.Router {
 func Router() {
 
 	// config := settings.Get()
-	r := newRouter()
+	newRouter()
 
-	http.ListenAndServe(":8100", r)
+	// http.ListenAndServe(":8100", r)
 
 }
