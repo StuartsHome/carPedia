@@ -5,17 +5,12 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/service"
+	"github.com/stuartshome/carpedia/settings"
 	// "github.com/stuartshome/carpedia/settings"
 )
 
-func Router() {
-	// config := settings.Get()
-	r := newRouter()
-
-	http.ListenAndServe(":8100", r)
-}
-
 func newRouter() *mux.Router {
+	config := settings.Get()
 	r := mux.NewRouter()
 
 	//Html page
@@ -28,7 +23,18 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/car", service.CreateCarHandler).Methods("POST")
 
 	//Healthcheck
-	r.HandleFunc("/health", service.HealthCheckHandler)
+	r.HandleFunc("/health", service.HealthCheckHandler).Methods("GET")
 
+	http.ListenAndServe(*config.HttpSettings.ListenAddress, r)
 	return r
+
+}
+
+func Router() {
+
+	// config := settings.Get()
+	r := newRouter()
+
+	http.ListenAndServe(":8100", r)
+
 }

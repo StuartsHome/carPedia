@@ -3,6 +3,20 @@
 
 Under development, mostly on weekends
 
+## How to use
+### How to run
+#### Local
+- `go run main.go` for production
+- `go run main.go -development=true` for development "testing"
+
+#### Container
+- `make docker-start`
+
+
+### Logging
+- logs are located in log/*
+
+
 ## Features
 - MySQL Database
 - Makefile w/ make commands

@@ -10,9 +10,8 @@ import (
 )
 
 func main() {
-
-	store.DbStartup()
 	logging.InitLogger()
-	fmt.Println("Service starting...")
+	store.DbStartup()
 	http_client.Router()
+	fmt.Println("Service starting...")
 }

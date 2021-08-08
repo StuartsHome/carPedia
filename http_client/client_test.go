@@ -10,6 +10,12 @@ import (
 	"github.com/stuartshome/carpedia/service"
 )
 
+// type dbcreds struct {
+// 	dbusername string "test"
+// 	dbpass     string "123456"
+// 	dbname     string "car_pedia"
+// }
+
 func TestHealthCheckHandler(t *testing.T) {
 	// A new http request, this request is passed to the handler
 	// This only tests the handler, not the route to the handler
@@ -43,12 +49,15 @@ func TestHealthCheckHandler(t *testing.T) {
 
 func TestStaticFileServer(t *testing.T) {
 	r := newRouter()
+
 	mockServer := httptest.NewServer(r)
+	mockServer.URL = "http://127.0.0.1:8100"
 
 	request, err := http.NewRequest("GET", mockServer.URL+"/assets/", nil)
 	request.Header.Set("Accept", "text/html; charset=utf-8")
 	client := http.Client{}
 	response, _ := client.Do(request)
+
 	// response, err := http.Get(mockServer.URL + "/assets/")
 	t.Log(response.Request.URL)
 	t.Log(response.Header)
@@ -67,7 +76,6 @@ func TestStaticFileServer(t *testing.T) {
 }
 
 func TestRouter(t *testing.T) {
-
 	r := newRouter()
 	mockServer := httptest.NewServer(r)
 	response, err := http.Get(mockServer.URL + "/health")

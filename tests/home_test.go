@@ -11,7 +11,7 @@ import (
 
 func TestJsonResponse(t *testing.T) {
 	expectedResponse :=
-		`{"cars":[{"make":"Fiesta","model":"Ford","reg":1980},{"make":"Mondeo","model":"Ford","reg":1995}]}`
+		`{"cars":[{"make":"Fiesta","model":"Ford","reg":null},{"make":"Mondeo","model":"Ford","reg":null}]}`
 
 	hmm, err := service.JsonResponse()
 	response, _ := json.Marshal(hmm)
