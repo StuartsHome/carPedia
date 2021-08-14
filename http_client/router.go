@@ -5,11 +5,10 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/service"
-	"github.com/stuartshome/carpedia/settings"
 )
 
 func newRouter() *mux.Router {
-	config := settings.Get()
+	// config := settings.Get()
 	r := mux.NewRouter()
 
 	//Html page
@@ -24,7 +23,7 @@ func newRouter() *mux.Router {
 	//Healthcheck
 	r.HandleFunc("/health", service.HealthCheckHandler).Methods("GET")
 
-	http.ListenAndServe(*config.HttpSettings.ListenAddress, r)
+	// http.ListenAndServe(*config.HttpSettings.ListenAddress, r)
 	return r
 
 }
@@ -32,8 +31,8 @@ func newRouter() *mux.Router {
 func Router() {
 
 	// config := settings.Get()
-	newRouter()
+	r := newRouter()
 
-	// http.ListenAndServe(":8100", r)
+	http.ListenAndServe(":8100", r)
 
 }

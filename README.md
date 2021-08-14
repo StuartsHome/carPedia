@@ -59,9 +59,12 @@ Under development, mostly on weekends
 this should be automated
 - database - uri are different for local and container
 
-Vscode:
+##### Vscode:
 Trigger suggest = cmd + i
 Find with selection = cmd + e
 Change focus = cmd + l
+Search for function/method name = cmd + t
 
 Atoi (string to int) and Itoa (int to string).
+
+Composition to instantiate instead of Inheritance

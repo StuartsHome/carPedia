@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+
 	logging.InitLogger()
 	store.DbStartup()
 	http_client.Router()
