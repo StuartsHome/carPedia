@@ -15,10 +15,14 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 	// Write the JSON to the Response
 
 	cars, err := store.PackStore.GetCars()
-	carListBytes, err := json.Marshal(cars)
-
 	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	carListBytes, err := json.Marshal(cars)
+	if err != nil {
+		fmt.Println(fmt.Errorf("error: %v", err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -35,7 +39,7 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if err != nil {
-		fmt.Println(fmt.Errorf("Error: %v", err))
+		fmt.Println(fmt.Errorf("error: %v", err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -44,7 +48,9 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 	car.Model = r.Form.Get("model")
 	err = store.PackStore.CreateCar(&car)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	http.Redirect(w, r, "/assets/", http.StatusFound)
