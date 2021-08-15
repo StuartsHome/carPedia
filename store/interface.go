@@ -13,6 +13,9 @@ import (
 type Store interface {
 	CreateCar(car *model.Car) error
 	GetCars() ([]*model.Car, error)
+	GetCar(*model.Car) (*model.Car, error)
+	UpdateCar(car *model.Car) error
+	DeleteCar(car *model.Car) error
 }
 
 func DbStartup() {

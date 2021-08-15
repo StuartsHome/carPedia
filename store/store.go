@@ -11,8 +11,8 @@ type DbStore struct {
 	Db *sql.DB
 }
 
-// The dbStore struct will implement the Store interface
-// var _ Store = &dbStore{}
+// The DbStore struct will implement the Store interface
+var _ Store = &DbStore{}
 
 func (store *DbStore) CreateCar(car *model.Car) error {
 	_, err := store.Db.Query("INSERT INTO cars(make, model) VALUES (?,?)", car.Make, car.Model)
@@ -38,12 +38,15 @@ func (store *DbStore) GetCars() ([]*model.Car, error) {
 	return cars, nil
 }
 
-func deleteCar() {
-
+func (store *DbStore) GetCar(car *model.Car) (*model.Car, error) {
+	return car, nil
 }
 
-func updateCar() {
-
+func (store *DbStore) DeleteCar(car *model.Car) error {
+	return nil
+}
+func (store *DbStore) UpdateCar(car *model.Car) error {
+	return nil
 }
 
 // Package level variable that will be available for use

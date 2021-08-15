@@ -21,12 +21,36 @@ func (m *MockStore) CreateCar(car *model.Car) error {
 }
 
 func (m *MockStore) GetCars() ([]*model.Car, error) {
-	rets := m.Called()
 	/*
 		Since `rets.Get()` is a generic method, that returns whatever we pass to it,
-		we need to typecast it to the type we expect, which in this case is []*Bird
+		we need to typecast it to the type we expect, which in this case is []*Car
 	*/
+	rets := m.Called()
 	return rets.Get(0).([]*model.Car), rets.Error(1)
+}
+func (m *MockStore) GetCar(car *model.Car) (*model.Car, error) {
+	/*
+		Since `rets.Get()` is a generic method, that returns whatever we pass to it,
+		we need to typecast it to the type we expect, which in this case is []*Car
+	*/
+	rets := m.Called()
+	return rets.Get(0).(*model.Car), rets.Error(1)
+}
+func (m *MockStore) DeleteCar(car *model.Car) error {
+	/*
+		Since `rets.Get()` is a generic method, that returns whatever we pass to it,
+		we need to typecast it to the type we expect, which in this case is []*Car
+	*/
+	rets := m.Called(car)
+	return rets.Error(0)
+}
+func (m *MockStore) UpdateCar(car *model.Car) error {
+	/*
+		Since `rets.Get()` is a generic method, that returns whatever we pass to it,
+		we need to typecast it to the type we expect, which in this case is []*Car
+	*/
+	rets := m.Called()
+	return rets.Error(0)
 }
 
 func InitMockStore() *MockStore {

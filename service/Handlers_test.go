@@ -23,23 +23,13 @@ func newCreateCarForm() *url.Values {
 
 func TestCreateCar(t *testing.T) {
 	// Given
-	// var mockStore = new(mock_store.Store)
-	// var mockStore mock_store.Store = mock_store.Store{}
-	// mockStore2 := store.InitStore(&mockStore)
 	mockStore := store.InitMockStore()
-
 	testData := model.Car{
 		Make:  "ford",
 		Model: "mustang",
 	}
 
-	// json := `{"car": {"make": "ford", "model": "mustang"}}`
-	// r := ioutil.NopCloser(bytes.NewReader([]byte(json)))
-	// req, err := http.NewRequest("POST", "", r)
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
-
+	// When
 	mockStore.On("CreateCar", &testData).Return(nil)
 
 	form := newCreateCarForm()
@@ -53,6 +43,8 @@ func TestCreateCar(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	hf := http.HandlerFunc(CreateCarHandler)
 	hf.ServeHTTP(recorder, req2)
+
+	// Then
 	if status := recorder.Code; status != http.StatusFound {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
@@ -62,8 +54,8 @@ func TestCreateCar(t *testing.T) {
 }
 
 func TestGetCarsHandler(t *testing.T) {
+	// Given
 	// Initialise the mock store
-	// var mockStore mock_store.Store = mock_store.Store{}
 	mockStore := store.InitMockStore()
 	mockStore.On("GetCars").Return([]*model.Car{
 		{
@@ -72,6 +64,7 @@ func TestGetCarsHandler(t *testing.T) {
 		},
 	}, nil).Once()
 
+	// When
 	req, err := http.NewRequest("GET", "", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -84,8 +77,9 @@ func TestGetCarsHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
-	expected := model.Car{Make: "Citroen", Model: "c3"}
 
+	// Then
+	expected := model.Car{Make: "Citroen", Model: "c3"}
 	c := []model.Car{}
 	err = json.NewDecoder(recorder.Body).Decode(&c)
 	if err != nil {
@@ -93,7 +87,25 @@ func TestGetCarsHandler(t *testing.T) {
 	}
 	actual := c[0]
 	assert.Equal(t, expected, actual)
+}
 
+func TestEmptyTable() {
+	// Given
+	mockStore := store.InitMockStore()
+	mockStore.On("GetCars").Return([]*model.Car{
+		{
+			Make:  "Citroen",
+			Model: "c3",
+		},
+	}, nil).Once()
+
+	// When
+	// req, err := http.NewRequest("GET", "", nil)
+	// if err != nil {
+	// 	t.Fatal(err)
+	// }
+
+	// Then
 }
 
 // json := `{}`

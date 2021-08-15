@@ -68,3 +68,17 @@ Search for function/method name = cmd + t
 Atoi (string to int) and Itoa (int to string).
 
 Composition to instantiate instead of Inheritance
+Golang uses composition.
+
+1. Object composition: Object composition is used instead of inheritance (which is used in most of the traditional languages). Object composition means that an object contains object of another object (say Object X) and delegate responsibilities of object X to it. Here instead of overriding functions (as in inheritance), function calls delegated to internal objects.
+2. Interface composition: In interface composition and interface can compose other interface and have all set of methods declared in internal interface becomes part of that interface.
+
+
+There is a book called:
+Design Patterns: Elements of Reusable Object-Oriented Software
+In that, it speaks about the gang of 4, and to favour composition over inheritance
+
+Embedding provides automatic delegation. This in itself isn't enough to replace inheritance, as embedding provides no form of polymorphism. Go interfaces do provide polymorphism, they are a bit different than the interfaces you may be use to (some people liken them to duck typing or structural typing).
+
+polymorphism via interfaces
+There is no inheritance in Go, so leave those is-a relationships at the door. To write Go, we need to think about OO design in terms of composition.

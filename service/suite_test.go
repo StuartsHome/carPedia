@@ -47,3 +47,8 @@ func (ts *ServiceTestSuite) SetupTest() {
 func TestServiceTestSuite(t *testing.T) {
 	suite.Run(t, new(ServiceTestSuite))
 }
+
+/*
+	When is this run?
+	What mock does it use? Right now it looks like as though it uses mockito mock
+*/
