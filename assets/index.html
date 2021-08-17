@@ -19,13 +19,33 @@
     <br/>
 
     <form action="/car" method="post">
-        Make:
+        Make: &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="text" name="make">
-        <br/> Model:
+        <br/> Model: &nbsp;&nbsp;&nbsp;
         <input type="text" name="model">
         <br/>
         <input type="submit" value="Submit">
+        <br/>
     </form>
+    <br/>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Reg</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>{{ .Make }}</th>
+            <th>{{ .Model }}</th>
+            <th></th>
+        </tr>
+    </table>
+    <br/>
+
+
+
     <script>
         carTable = document.querySelector("table")
         /*

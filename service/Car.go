@@ -52,6 +52,28 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	HtmlResponse(w, car)
 
 	http.Redirect(w, r, "/assets/", http.StatusFound)
+}
+
+func GetSingleCarHandler(w http.ResponseWriter, r *http.Request) {
+	// Call store GetCars()
+	// Marshal the value into JSON
+	// Write the JSON to the Response
+
+	car := model.Car{}
+	cars, err := store.PackStore.GetCar(&car)
+	if err != nil {
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	carListBytes, err := json.Marshal(cars)
+	if err != nil {
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Write(carListBytes)
 }

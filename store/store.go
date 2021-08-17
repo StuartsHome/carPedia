@@ -39,6 +39,20 @@ func (store *DbStore) GetCars() ([]*model.Car, error) {
 }
 
 func (store *DbStore) GetCar(car *model.Car) (*model.Car, error) {
+	rows, err := store.Db.Query("SELECT make, model from cars WHERE make, model = (?, ?)", car.Make, car.Model)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	cars := []*model.Car{}
+	for rows.Next() {
+		car := &model.Car{}
+		if err := rows.Scan(&car.Make, &car.Model); err != nil {
+			return nil, err
+		}
+		cars = append(cars, car)
+	}
 	return car, nil
 }
 
