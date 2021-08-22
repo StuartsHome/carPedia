@@ -27,6 +27,10 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(carListBytes)
+	words := string(carListBytes)
+	for r := range words {
+		DisplayAllHTMLResponse(w, r)
+	}
 }
 
 func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
@@ -52,7 +56,7 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	HtmlResponse(w, car)
+	DisplayHTMLResponse(w, car)
 
 	http.Redirect(w, r, "/assets/", http.StatusFound)
 }
