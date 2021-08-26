@@ -1,7 +1,11 @@
 package service
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
+	"log"
 	"net/http"
 	"path/filepath"
 	"text/template"
@@ -24,9 +28,26 @@ func DisplayAllHTMLResponse(response http.ResponseWriter, value interface{}) {
 	t.Execute(response, value)
 }
 
-// ctrl + a or s 	- cursor line start/end
-// ctrl + d 		- delete char forward
-// shift + alt + a - multiple line comment
-// cmd + p
-// opt + cmd + l or r (move tabs l or right)
-// opt + l or r
+// log an error and return it in the specified HTTP response
+func ErrorResponse(response *http.ResponseWriter, statusCode int, err error) {
+	message := err.Error()
+	log.Print(fmt.Sprintf("HTTP error returned: %s - %s", http.StatusText(statusCode), message))
+	http.Error(*response, message, statusCode)
+}
+
+func FromJSON(data io.Reader, value interface{}) error {
+	decoder := json.NewDecoder(data)
+	decoder.DisallowUnknownFields()
+	return decoder.Decode(value)
+}
+
+func ToJSON(value interface{}) []byte {
+	var buffer bytes.Buffer
+	encoder := json.NewEncoder(&buffer)
+
+	err := encoder.Encode(value)
+	if err != nil {
+		log.Panicf("Failure converting entity to JSON: %v", err)
+	}
+	return buffer.Bytes()
+}

@@ -56,7 +56,7 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	DisplayHTMLResponse(w, car)
+	// DisplayHTMLResponse(w, car)
 
 	http.Redirect(w, r, "/assets/", http.StatusFound)
 }
