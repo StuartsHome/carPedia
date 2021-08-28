@@ -11,17 +11,21 @@
     <table>
         <thead>
             <tr>
+                <th>row</th>
                 <th>Make</th>
                 <th>Model</th>
                 <th>Reg</th>
+                <th>struct</th>
             </tr>
         </thead>
         <tbody>
-            {{range .}}
+            {{range $index, $results := .}}
             <tr>
+                <th> {{add $index 1}}</th>
                 <th>{{ .Make }}</th>
                 <th>{{ .Model }}</th>
                 <th>{{ .Reg }}</th>
+                <th> {{ $results }}</th>
             </tr>
             {{end}}
         </tbody>

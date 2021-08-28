@@ -23,7 +23,9 @@ func DisplayAllHTMLResponse(response http.ResponseWriter, value interface{}) {
 	response.Header().Set("Content-Type", "text/html")
 	response.WriteHeader(http.StatusOK)
 	fp, _ := filepath.Abs(".")
-	t := template.Must(template.ParseFiles(fp + "/assets/allcars.html"))
+	funcs := template.FuncMap{"add": add}
+	t := template.Must(template.New("allcars.html").Funcs(funcs).ParseFiles(fp + "/assets/allcars.html"))
+	// t.Funcs(funcs)
 	// fmt.Println(fp + "/assets/allCars.html")
 	t.Execute(response, value)
 }
@@ -50,4 +52,9 @@ func ToJSON(value interface{}) []byte {
 		log.Panicf("Failure converting entity to JSON: %v", err)
 	}
 	return buffer.Bytes()
+}
+
+// add function to count rows in allcars html template
+func add(x, y int) int {
+	return x + y
 }
