@@ -24,3 +24,9 @@ Under development, mostly on weekends
 - Static web page (HTML, JS)
 - Shell scripts
 - Logging
+
+
+
+# TO do
+- all data endpoint (verify zone)
+    - get request for all data in table

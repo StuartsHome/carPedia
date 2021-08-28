@@ -9,6 +9,10 @@ import (
 	"github.com/stuartshome/carpedia/store"
 )
 
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 	// Call store GetCars()
 	// Marshal the value into JSON
@@ -27,10 +31,11 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(carListBytes)
-	words := string(carListBytes)
-	for r := range words {
-		DisplayAllHTMLResponse(w, r)
-	}
+	// DisplayHTMLResponse(w, cars)
+	// words := string(carListBytes)
+	// for r := range words {
+	// 	DisplayAllHTMLResponse(w, r)
+	// }
 }
 
 func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
@@ -56,9 +61,9 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	// DisplayHTMLResponse(w, car)
+	DisplayHTMLResponse(w, car)
 
-	http.Redirect(w, r, "/assets/", http.StatusFound)
+	// http.Redirect(w, r, "/assets/", http.StatusFound)
 }
 
 func GetSingleCarHandler(w http.ResponseWriter, r *http.Request) {
@@ -80,4 +85,23 @@ func GetSingleCarHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(carListBytes)
+}
+
+func AllCarsHandler(w http.ResponseWriter, r *http.Request) {
+	// car := model.Car{}
+	cars, err := store.PackStore.GetCars()
+	if err != nil {
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	// carListBytes, err := json.Marshal(cars)
+	if err != nil {
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	DisplayAllHTMLResponse(w, cars)
+
 }

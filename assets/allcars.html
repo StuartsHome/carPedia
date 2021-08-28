@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<head>
+    <title>All Cars</title>
+</head>
+
+<body> 
+    <h1>all cars</h1>
+    <h3>results</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Reg</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .}}
+            <tr>
+                <th>{{ .Make }}</th>
+                <th>{{ .Model }}</th>
+                <th>{{ .Reg }}</th>
+            </tr>
+            {{end}}
+        </tbody>
+
+    </table>
+<body> 

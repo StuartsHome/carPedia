@@ -14,10 +14,17 @@ func newRouter() *mux.Router {
 	//Html page
 	staticFileDirectory := http.Dir("assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
-	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
+	r.HandleFunc("/home", service.CreateCarHandler).Methods("GET")
+	r.PathPrefix("/home").Handler(staticFileHandler).Methods("GET")
 
 	r.HandleFunc("/car", service.GetCarHandler).Methods("GET")
 	r.HandleFunc("/car", service.CreateCarHandler).Methods("POST")
+
+	// Html page for all cars from db
+	staticFileDirectoryAll := http.Dir("assets/")
+	staticFileHandlerAll := http.StripPrefix("/assets/", http.FileServer(staticFileDirectoryAll))
+	r.HandleFunc("/allcars", service.AllCarsHandler).Methods("GET")
+	r.PathPrefix("/allcars").Handler(staticFileHandlerAll).Methods("GET")
 
 	//Healthcheck
 	r.HandleFunc("/health", service.HealthCheckHandler).Methods("GET")
