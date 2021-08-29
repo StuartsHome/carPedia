@@ -17,8 +17,9 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/home", service.CreateCarHandler).Methods("GET")
 	r.PathPrefix("/home").Handler(staticFileHandler).Methods("GET")
 
+	r.HandleFunc("/home", service.CreateCarHandler).Methods("POST")
 	r.HandleFunc("/car", service.GetCarHandler).Methods("GET")
-	r.HandleFunc("/car", service.CreateCarHandler).Methods("POST")
+	r.HandleFunc("/results", service.GetSingleCarHandler).Methods("POST")
 
 	// Html page for all cars from db
 	staticFileDirectoryAll := http.Dir("assets/")

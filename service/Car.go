@@ -31,11 +31,6 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(carListBytes)
-	// DisplayHTMLResponse(w, cars)
-	// words := string(carListBytes)
-	// for r := range words {
-	// 	DisplayAllHTMLResponse(w, r)
-	// }
 }
 
 func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
@@ -63,15 +58,23 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	DisplayHTMLResponse(w, car)
 
+	// no need for redirect at the moment
 	// http.Redirect(w, r, "/assets/", http.StatusFound)
 }
 
 func GetSingleCarHandler(w http.ResponseWriter, r *http.Request) {
-	// Call store GetCars()
-	// Marshal the value into JSON
-	// Write the JSON to the Response
+	// parse form
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Println(fmt.Errorf("error: %v", err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
+	// populate car with values from html form
 	car := model.Car{}
+	car.Make = r.Form.Get("make")
+	car.Model = r.Form.Get("model")
 	cars, err := store.PackStore.GetCar(&car)
 	if err != nil {
 		fmt.Println(fmt.Errorf("error: %v", err))
@@ -85,6 +88,7 @@ func GetSingleCarHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(carListBytes)
+	http.Redirect(w, r, "/home", http.StatusFound)
 }
 
 func AllCarsHandler(w http.ResponseWriter, r *http.Request) {

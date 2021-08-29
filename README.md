@@ -17,9 +17,9 @@ Under development, mostly on weekends
 - logs are located in log/*
 
 ## Web Pages
-- **home**: web page that provides html form for saving car details into db
-- **allcars**: displays all the cars in the database in a html table
-- **car**: displays all the cars in the database in JSON format
+- **/home**: web page that provides html form for saving car details into db
+- **/allcars**: displays all the cars in the database in a html table
+- **/car**: displays all the cars in the database in JSON format
 
 ## Features
 - MySQL Database
@@ -28,9 +28,3 @@ Under development, mostly on weekends
 - Static web page (HTML, JS)
 - Shell scripts
 - Logging
-
-
-
-# TO do
-- all data endpoint (verify zone)
-    - get request for all data in table

@@ -17,8 +17,7 @@
         </tr>
     </table>
     <br/>
-
-    <form action="/car" method="post">
+    <form action="/home" method="post">
         <!-- Make: &nbsp;&nbsp;&nbsp;&nbsp; -->
         <input type="text" name="make">
         <!-- <br/> Model: &nbsp;&nbsp;&nbsp; -->
@@ -28,6 +27,7 @@
         <br/>
     </form>
     <br/>
+    <p>Recently added:</p>
     <table>
         <tr>
             <th>ID</th>
@@ -42,13 +42,14 @@
             <th></th>
         </tr>
     </table>
-    <!-- This button is for issuing a get and displaying all car information
-    in a automatic table using range  -->
-    <!-- <form action="/car" method="post">
+    <br/>
+    <form action="/results" method="post">
         <br/>
+        <h5>Enter a model to find in the db</h5>
+        <input type="text" name="make">
+        <input type="text" name="model">
         <input type="submit" value="Submit">
-        <br/>
-    </form> -->
+    </form>
     <br/>
 
 
