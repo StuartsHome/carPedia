@@ -1,7 +1,10 @@
 package http_client
 
 import (
+	"log"
 	"net/http"
+
+	_ "net/http/pprof"
 
 	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/service"
@@ -10,6 +13,9 @@ import (
 func newRouter() *mux.Router {
 	// config := settings.Get()
 	r := mux.NewRouter()
+
+	// use defaultMux for debug routes for pprof
+	r.PathPrefix("/debug/").Handler(http.DefaultServeMux)
 
 	//Html page
 	staticFileDirectory := http.Dir("assets/")
@@ -40,6 +46,7 @@ func Router() {
 	// config := settings.Get()
 	r := newRouter()
 
-	http.ListenAndServe(":8100", r)
+	// http.ListenAndServe(":8100", r)
+	log.Println(http.ListenAndServe(":8100", r))
 
 }

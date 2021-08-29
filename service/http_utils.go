@@ -25,7 +25,6 @@ func DisplayAllHTMLResponse(response http.ResponseWriter, value interface{}) {
 	fp, _ := filepath.Abs(".")
 	funcs := template.FuncMap{"add": add}
 	t := template.Must(template.New("allcars.html").Funcs(funcs).ParseFiles(fp + "/assets/allcars.html"))
-	// t.Funcs(funcs)
 	// fmt.Println(fp + "/assets/allCars.html")
 	t.Execute(response, value)
 }

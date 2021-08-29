@@ -21,6 +21,20 @@ func (store *DbStore) CreateCar(car *model.Car) error {
 	return err
 }
 
+func (store *DbStore) GetCar(car *model.Car) (*model.Car, error) {
+	row := store.Db.QueryRow("SELECT make, model FROM cars WHERE make = ?", car.Make)
+	result := model.Car{}
+	switch err := row.Scan(&result.Make, &result.Model); err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+	case nil:
+		fmt.Println(result.Make, result.Model)
+	default:
+		panic(err)
+	}
+	return &result, nil
+}
+
 func (store *DbStore) GetCars() ([]*model.Car, error) {
 	rows, err := store.Db.Query("SELECT make, model from cars")
 	if err != nil {
@@ -37,33 +51,6 @@ func (store *DbStore) GetCars() ([]*model.Car, error) {
 		cars = append(cars, car)
 	}
 	return cars, nil
-}
-
-func (store *DbStore) GetCar(car *model.Car) (*model.Car, error) {
-	row := store.Db.QueryRow("SELECT make, model FROM cars WHERE make = ?", car.Make)
-	result := model.Car{}
-	switch err := row.Scan(&result.Make, &result.Model); err {
-	case sql.ErrNoRows:
-		fmt.Println("No rows were returned!")
-	case nil:
-		fmt.Println(result.Make, result.Model)
-	default:
-		panic(err)
-	}
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// defer rows.Close()
-
-	// cars := []*model.Car{}
-	// for rows.Next() {
-	// 	car := &model.Car{}
-	// 	if err := rows.Scan(&car.Make, &car.Model); err != nil {
-	// 		return nil, err
-	// 	}
-	// 	cars = append(cars, car)
-	// }
-	return &result, nil
 }
 
 func (store *DbStore) DeleteCar(car *model.Car) error {
