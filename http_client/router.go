@@ -25,6 +25,8 @@ func newRouter() *mux.Router {
 
 	r.HandleFunc("/home", service.CreateCarHandler).Methods("POST")
 	r.HandleFunc("/car", service.GetCarHandler).Methods("GET")
+	r.HandleFunc("/car/{id:[0-9]+}", service.UpdateCar).Methods("PUT")
+	r.HandleFunc("/car/{id:[0-9]+}", service.DeleteCar).Methods("DELETE")
 	r.HandleFunc("/results", service.GetSingleCarHandler).Methods("POST")
 
 	// Html page for all cars from db

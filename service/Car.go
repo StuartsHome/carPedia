@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
+	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/model"
 	"github.com/stuartshome/carpedia/store"
 )
@@ -108,4 +110,45 @@ func AllCarsHandler(w http.ResponseWriter, r *http.Request) {
 
 	DisplayAllHTMLResponse(w, cars)
 
+}
+
+func DeleteCar(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		ErrorResponse(&w, http.StatusBadRequest, err)
+	}
+
+	car := model.Car{ID: &id}
+	if err := store.PackStore.DeleteCar(&car); err != nil {
+		ErrorResponse(&w, http.StatusInternalServerError, err)
+	}
+	DisplayHTMLResponse(w, car)
+}
+
+func UpdateCar(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		ErrorResponse(&w, http.StatusBadRequest, err)
+	}
+
+	var c model.Car
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&c); err != nil {
+		ErrorResponse(&w, http.StatusBadRequest, err)
+		return
+	}
+
+	defer r.Body.Close()
+	c.ID = &id
+
+	if err := store.PackStore.UpdateCar(&c); err != nil {
+		ErrorResponse(&w, http.StatusInternalServerError, err)
+		return
+	}
+
+	DisplayHTMLResponse(w, c)
 }

@@ -19,11 +19,11 @@ INSERT INTO car_pedia.cars (make, model) VALUES
 ('seat', 'ibiza');
 
 DROP TABLE IF EXISTS car_pedia.carMake;
-CREATE TABLE car_pedia.dummy (
+CREATE TABLE car_pedia.carMake (
   id INT PRIMARY KEY AUTO_INCREMENT,
   make VARCHAR(256) NOT NULL,
-  description VARCHAR(256),
-  FOREIGN KEY (make) REFERENCES cars(make)
+  description VARCHAR(256)
+  -- FOREIGN KEY (make) REFERENCES cars(make)
 );
 
 INSERT INTO car_pedia.carMake (make, description) VALUES

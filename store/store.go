@@ -54,10 +54,13 @@ func (store *DbStore) GetCars() ([]*model.Car, error) {
 }
 
 func (store *DbStore) DeleteCar(car *model.Car) error {
-	return nil
+	_, err := store.Db.Exec("DELETE FROM cars WHERE make=$1", car.Make)
+	return err
 }
 func (store *DbStore) UpdateCar(car *model.Car) error {
-	return nil
+	_, err :=
+		store.Db.Exec("UPDATE cars SET make=$1, model=$2 WHERE id=$3", car.Make, car.Model)
+	return err
 }
 
 // Package level variable that will be available for use

@@ -8,6 +8,7 @@ type Car struct {
 	Make  string `json:"make"`
 	Model string `json:"model"`
 	Reg   *int   `json:"reg"`
+	ID    *int   `json:"id"`
 }
 
 var Cars []Car
