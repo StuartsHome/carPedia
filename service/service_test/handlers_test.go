@@ -12,6 +12,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stuartshome/carpedia/model"
+	"github.com/stuartshome/carpedia/service"
 	"github.com/stuartshome/carpedia/store"
 )
 
@@ -42,7 +43,7 @@ func TestCreateCar(t *testing.T) {
 	req2.Header.Add("Content-Length", strconv.Itoa(len(form.Encode())))
 
 	recorder := httptest.NewRecorder()
-	hf := http.HandlerFunc(CreateCarHandler)
+	hf := http.HandlerFunc(service.CreateCarHandler)
 	hf.ServeHTTP(recorder, req2)
 
 	// Then
@@ -70,7 +71,7 @@ func TestCreateCarHandlerError(t *testing.T) {
 	req2.Header.Add("Content-Length", strconv.Itoa(len(form.Encode())))
 
 	recorder := httptest.NewRecorder()
-	hf := http.HandlerFunc(CreateCarHandler)
+	hf := http.HandlerFunc(service.CreateCarHandler)
 	hf.ServeHTTP(recorder, req2)
 
 	// Then
@@ -98,7 +99,7 @@ func TestGetCarsHandler(t *testing.T) {
 	}
 
 	recorder := httptest.NewRecorder()
-	hf := http.HandlerFunc(GetCarHandler)
+	hf := http.HandlerFunc(service.GetCarHandler)
 	hf.ServeHTTP(recorder, req)
 	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
@@ -127,7 +128,7 @@ func TestGetCarsHandlerError(t *testing.T) {
 		t.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	hf := http.HandlerFunc(GetCarHandler)
+	hf := http.HandlerFunc(service.GetCarHandler)
 	hf.ServeHTTP(recorder, req)
 
 	// Then
@@ -137,27 +138,3 @@ func TestGetCarsHandlerError(t *testing.T) {
 			status, http.StatusOK)
 	}
 }
-
-// json := `{}`
-// r := ioutil.NopCloser(bytes.NewReader([]byte(json)))
-// response := &http.Response{Body: r, StatusCode: 200}
-// mockClient.On("GET", "").Return(response)
-
-// req, err := http.NewRequest("GET", "", nil)
-
-// if err != nil {
-// 	t.Fatal(err)
-// }
-// hf := http.HandlerFunc(aa.GetCarHandler)
-// hf.ServeHTTP(recorder, req)
-
-// recorder := httptest.NewRecorder()
-// expected := model.Car{Make: "citroen", Model: "c3"}
-// c := []model.Car{}
-// json.NewDecoder(recorder.Body).Decode(&c)
-
-// actual := c[0]
-// if actual != expected {
-// 	t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
-// }
-// mockStore.AssertExpectations(t)

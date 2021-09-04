@@ -32,9 +32,9 @@ func DbStartup() {
 	user := config.DatabaseCreds.DBUser
 	pass := config.DatabaseCreds.DBPass
 
-	connString := fmt.Sprintf("%v:%v@tcp(127.0.0.1:3306)/%v", user, pass, dbname)
 	// connString := fmt.Sprintf("%v:%v@tcp(127.0.0.1:3306)/%v", user, pass, dbname)
-	// connString := fmt.Sprintf("%v:%v@tcp(docker.for.mac.localhost:3306)/%v", user, pass, dbname)
+	// connString := fmt.Sprintf("%v:%v@tcp(127.0.0.1:3306)/%v", user, pass, dbname)
+	connString := fmt.Sprintf("%v:%v@tcp(docker.for.mac.localhost:3306)/%v", user, pass, dbname)
 	db, err := sql.Open("mysql", connString)
 	if err != nil {
 		log.Fatal(err)

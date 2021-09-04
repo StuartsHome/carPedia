@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stuartshome/carpedia/http_client"
 	"github.com/stuartshome/carpedia/service"
 )
 
@@ -53,7 +54,7 @@ func TestStaticFileServer(t *testing.T) {
 		panic(err)
 	}
 	// os.Setenv()
-	r := newRouter()
+	r := http_client.NewRouter()
 
 	mockServer := httptest.NewServer(r)
 	// defer mockServer.Close()
@@ -85,7 +86,7 @@ func TestRouter(t *testing.T) {
 	if err := os.Chdir("../"); err != nil {
 		panic(err)
 	}
-	r := newRouter()
+	r := http_client.NewRouter()
 	mockServer := httptest.NewServer(r)
 	response, err := http.Get(mockServer.URL + "/health")
 	if err != nil {
@@ -110,7 +111,7 @@ func TestRouter(t *testing.T) {
 }
 
 func TestBadRoute(t *testing.T) {
-	r := newRouter()
+	r := http_client.NewRouter()
 	mockServer := httptest.NewServer(r)
 	response, err := http.Post(mockServer.URL+"/health", "", nil)
 	if err != nil {
@@ -133,4 +134,12 @@ func TestBadRoute(t *testing.T) {
 	expected := ""
 
 	assert.Equal(t, expected, responseString)
+}
+
+func TestInvalidRequestGet(t *testing.T) {
+	apiClient := http_client.New()
+
+	actual, err := apiClient.Get("http://google.com")
+	assert.Empty(t, err)
+	assert.Equal(t, actual.StatusCode, 200)
 }

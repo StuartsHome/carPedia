@@ -10,7 +10,7 @@ import (
 	"github.com/stuartshome/carpedia/service"
 )
 
-func newRouter() *mux.Router {
+func NewRouter() *mux.Router {
 	// config := settings.Get()
 	r := mux.NewRouter()
 
@@ -46,7 +46,7 @@ func newRouter() *mux.Router {
 func Router() {
 
 	// config := settings.Get()
-	r := newRouter()
+	r := NewRouter()
 
 	// http.ListenAndServe(":8100", r)
 	log.Println(http.ListenAndServe(":8100", r))

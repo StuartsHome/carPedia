@@ -69,7 +69,7 @@ func (s *Settings) init() {
 	if err := env.Parse(&s.DatabaseCreds); err != nil {
 		logging.Logf("problem with parsing DatabaseCreds: %v", err)
 	}
-	// t := "true"
+
 	err = godotenv.Load("script_config.env")
 	if err != nil {
 		log.Fatalf("error loading .env file")
