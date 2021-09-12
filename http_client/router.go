@@ -10,6 +10,8 @@ import (
 	"github.com/stuartshome/carpedia/service"
 )
 
+var descController service.DescController = service.NewDescController()
+
 func NewRouter() *mux.Router {
 	// config := settings.Get()
 	r := mux.NewRouter()
@@ -17,7 +19,7 @@ func NewRouter() *mux.Router {
 	// use defaultMux for debug routes for pprof
 	r.PathPrefix("/debug/").Handler(http.DefaultServeMux)
 
-	//Html page
+	// html page
 	staticFileDirectory := http.Dir("assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	r.HandleFunc("/home", service.CreateCarHandler).Methods("GET")
@@ -29,13 +31,17 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/car/{id:[0-9]+}", service.DeleteCar).Methods("DELETE")
 	r.HandleFunc("/results", service.GetSingleCarHandler).Methods("POST")
 
-	// Html page for all cars from db
+	// description handlers used by cache
+	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
+	r.HandleFunc("/desc", descController.GetDesc).Methods("GET")
+
+	// html page for all cars from db
 	staticFileDirectoryAll := http.Dir("assets/")
 	staticFileHandlerAll := http.StripPrefix("/assets/", http.FileServer(staticFileDirectoryAll))
 	r.HandleFunc("/allcars", service.AllCarsHandler).Methods("GET")
 	r.PathPrefix("/allcars").Handler(staticFileHandlerAll).Methods("GET")
 
-	//Healthcheck
+	// healthcheck
 	r.HandleFunc("/health", service.HealthCheckHandler).Methods("GET")
 
 	// http.ListenAndServe(*config.HttpSettings.ListenAddress, r)
