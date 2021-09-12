@@ -11,7 +11,14 @@ import (
 )
 
 var (
-	descService DescService = NewDescService()
+	/*
+		// before
+		// using this to create a new reference to DescService
+		// this is bad as the controller should be injected into the service,
+		// not instantiated by itself
+		descService DescService = NewDescService()
+	*/
+	descService DescService
 )
 
 type service struct{}
@@ -32,7 +39,9 @@ type DescController interface {
 	AddDesc(w http.ResponseWriter, r *http.Request)
 }
 
-func NewDescController() DescController {
+// constructor service
+func NewDescController(service DescService) DescController {
+	descService = service
 	return &controller{}
 }
 

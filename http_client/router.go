@@ -10,7 +10,10 @@ import (
 	"github.com/stuartshome/carpedia/service"
 )
 
-var descController service.DescController = service.NewDescController()
+var (
+	descService    service.DescService    = service.NewDescService()
+	descController service.DescController = service.NewDescController(descService)
+)
 
 func NewRouter() *mux.Router {
 	// config := settings.Get()

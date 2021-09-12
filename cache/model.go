@@ -1,5 +1,5 @@
 package cache
 
 type Desc struct {
-	Id int
+	Id int64
 }
