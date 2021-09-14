@@ -7,7 +7,7 @@ import (
 )
 
 type CarService interface {
-	FetchData() error
+	FetchData()
 }
 
 const (
@@ -21,17 +21,14 @@ func NewCarService() CarService {
 	return &fetchCarDataService{}
 }
 
-func (*fetchCarDataService) FetchData() error {
+func (*fetchCarDataService) FetchData() {
 	client := http_client.New()
 
 	// call the external api
-	response, err := client.Get(carServiceUrl)
-	if err != nil {
-		return err
-	}
+	response, _ := client.Get(carServiceUrl)
 
-	carDataChannel <- response
 	fmt.Println(response.StatusCode)
-	return err
+	carDataChannel <- response
+	// return err
 
 }

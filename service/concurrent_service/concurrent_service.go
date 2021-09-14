@@ -4,15 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/stuartshome/carpedia/model"
 )
 
 type ConcurrentService interface {
-	GetDetails() User
+	GetDetails() (interface{}, interface{})
 }
 
-type concurrentService struct {
+type ConService struct {
 }
 
 var (
@@ -23,10 +21,10 @@ var (
 )
 
 func NewConcurrentService() ConcurrentService {
-	return &concurrentService{}
+	return &ConService{}
 }
 
-func (*concurrentService) GetDetails() User {
+func (*ConService) GetDetails() (interface{}, interface{}) {
 	// goroutine to get data from http://localhost:8100/car/1
 	go carService.FetchData()
 	// goroutine to get data from http://localhost:8100/users/1
@@ -37,21 +35,25 @@ func (*concurrentService) GetDetails() User {
 	car, _ := getCarData()
 	user, _ := getUserData()
 
-	return User{}
+	// return UserDetails{user: user, car: car}
+	return car, user
 }
 
-func getCarData() (model.Car, error) {
+func getCarData() (interface{}, error) {
 	r1 := <-carDataChannel
-	var car model.Car
+	// var car model.Car
+	var car interface{}
+	fmt.Println(json.NewDecoder(r1.Body))
 	if err := json.NewDecoder(r1.Body).Decode(&car); err != nil {
 		fmt.Println(err.Error())
 		return car, err
 	}
 	return car, nil
 }
-func getUserData() (User, error) {
+func getUserData() (interface{}, error) {
 	r1 := <-carDataChannel
-	var user User
+	var user interface{}
+	fmt.Println(json.NewDecoder(r1.Body))
 	if err := json.NewDecoder(r1.Body).Decode(&user); err != nil {
 		fmt.Println(err.Error())
 		return user, err

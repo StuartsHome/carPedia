@@ -7,7 +7,7 @@ import (
 )
 
 type UserService interface {
-	FetchData() error
+	FetchData()
 }
 
 const (
@@ -21,16 +21,13 @@ func NewUserService() UserService {
 	return &fetchUserDataService{}
 }
 
-func (*fetchUserDataService) FetchData() error {
+func (*fetchUserDataService) FetchData() {
 	client := http_client.New()
 
 	// call the external api
-	response, err := client.Get(userServiceUrl)
-	if err != nil {
-		return err
-	}
-	userDataChannel <- response
+	response, _ := client.Get(userServiceUrl)
+
 	fmt.Println(response.StatusCode)
-	return err
+	userDataChannel <- response
 
 }
