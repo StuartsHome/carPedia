@@ -1,12 +1,13 @@
-package service
+package concurrent_service
 
 import "github.com/stuartshome/carpedia/model"
 
 type User struct {
-	Id int
+	Id   int
+	Name string
 }
 
 type UserDetails struct {
-	user User
-	car  model.Car
+	User User
+	Car  model.Car
 }

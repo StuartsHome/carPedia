@@ -1,4 +1,4 @@
-package service
+package concurrent_service
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ type CarService interface {
 }
 
 const (
-	carServiceUrl = "http://google.com"
+	carServiceUrl = "http://localhost:8100/caruser"
 )
 
 type fetchCarDataService struct {

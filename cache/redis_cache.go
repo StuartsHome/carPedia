@@ -13,7 +13,7 @@ type redisCache struct {
 	expires time.Duration
 }
 
-func NewRedisCache(host string, db int, exp time.Duration) PostCache {
+func NewRedisCache(host string, db int, exp time.Duration) DescCache {
 	return &redisCache{
 		host:    host,
 		db:      db,
@@ -29,8 +29,8 @@ func (cache *redisCache) getClient() *redis.Client {
 	})
 }
 
-func (cache *redisCache) Set(key string, value *entity.Post) {
-	client := cache.getClient()()
+func (cache *redisCache) Set(key string, value *Desc) {
+	client := cache.getClient()
 
 	json, err := json.Marshal(value)
 	if err != nil {
@@ -41,15 +41,15 @@ func (cache *redisCache) Set(key string, value *entity.Post) {
 	client.Set(key, json, cache.expires*time.Second) // this value associated to this key will expire in the number of seconds we specify
 
 }
-func (cache *redisCache) Get(key string) *entity.Post {
-	client := cache.getClient()()
+func (cache *redisCache) Get(key string) *Desc {
+	client := cache.getClient()
 
 	val, err := client.Get(key).Result()
 	if err != nil {
 		return nil
 	}
 
-	post := entity.Post{}
+	post := Desc{}
 	if err := json.Unmarshal([]byte(val), &post); err != nil {
 		panic(err)
 	}

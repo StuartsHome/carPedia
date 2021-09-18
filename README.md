@@ -1,8 +1,6 @@
 ![Build Status](https://github.com/StuartsHome/carPedia/actions/workflows/go.yml/badge.svg)  
 # wikipedia for cars
 
-Under development, mostly on weekends
-
 ## How to use
 ### How to run
 #### Local

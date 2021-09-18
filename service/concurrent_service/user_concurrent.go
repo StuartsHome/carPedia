@@ -1,4 +1,4 @@
-package service
+package concurrent_service
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ type UserService interface {
 }
 
 const (
-	userServiceUrl = "http://google.com"
+	userServiceUrl = "http://localhost:8100/user"
 )
 
 type fetchUserDataService struct {

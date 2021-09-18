@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"net/http"
 	"strings"
@@ -74,14 +75,15 @@ func (*controller) AddDesc(w http.ResponseWriter, r *http.Request) {
 func (*controller) GetPostByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	postID := strings.Split(r.URL.Path, "/")[2]
-	post, err := descService.FindById(postID)
-	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		json.NewEncoder(w).Encode(errors.ServiceError{Message: "no posts found!"})
-	} else {
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(post)
-	}
+	fmt.Println(postID)
+	// post, err := descService.FindById(postID)
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusNotFound)
+	// 	json.NewEncoder(w).Encode(errors.ServiceError{Message: "no posts found!"})
+	// } else {
+	// 	w.WriteHeader(http.StatusOK)
+	// 	json.NewEncoder(w).Encode(post)
+	// }
 
 }
 
@@ -91,11 +93,13 @@ func (*controller) GetDesc(w http.ResponseWriter, r *http.Request) {
 
 func (*service) Validate(desc *cache.Desc) error {
 	if desc == nil {
-		err := errors.New("The desc is empty")
+		// err := errors.New("The desc is empty")
+		err := fmt.Errorf("The desc is empty")
 		return err
 	}
 	if desc.Title == "" {
-		err := errors.New("The desc title is empty")
+		// err := errors.New("The desc title is empty")
+		err := fmt.Errorf("The desc title is empty")
 		return err
 	}
 	return nil
@@ -104,9 +108,11 @@ func (*service) Validate(desc *cache.Desc) error {
 
 func (*service) Create(desc *cache.Desc) (*cache.Desc, error) {
 	desc.Id = rand.Int63()
-	return repo.Save(desc)
+	// return repo.Save(desc)
+	return nil, nil
 }
 func (*service) FindAll() ([]*cache.Desc, error) {
-	return repo.FindAll()
+	// return repo.FindAll()
+	return nil, nil
 
 }

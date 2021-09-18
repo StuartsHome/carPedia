@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/stuartshome/carpedia/service"
+	"github.com/stuartshome/carpedia/service/concurrent_service"
 )
 
 var (
@@ -37,6 +38,10 @@ func NewRouter() *mux.Router {
 	// description handlers used by cache
 	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
 	r.HandleFunc("/desc", descController.GetDesc).Methods("GET")
+
+	// user
+	r.HandleFunc("/user", concurrent_service.UserHandler).Methods("GET")
+	r.HandleFunc("/caruser", concurrent_service.CarHandler).Methods("GET")
 
 	// html page for all cars from db
 	staticFileDirectoryAll := http.Dir("assets/")

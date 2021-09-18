@@ -1,6 +1,6 @@
 package cache
 
 type DescCache interface {
-	Set(key string, value *entity.Post)
-	Get(key string) *entity.Post
+	Set(key string, value *Desc)
+	Get(key string) *Desc
 }
