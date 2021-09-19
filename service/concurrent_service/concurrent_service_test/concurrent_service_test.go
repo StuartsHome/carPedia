@@ -1,3 +1,5 @@
+// +build integration
+
 package concurrent_service_test
 
 import (
