@@ -16,7 +16,6 @@ func DisplayHTMLResponse(response http.ResponseWriter, value interface{}) {
 	response.WriteHeader(http.StatusOK)
 	fp, _ := filepath.Abs(".")
 	t := template.Must(template.ParseFiles(fp + "/assets/index.html"))
-	// fmt.Println(fp + "/assets/index.html")
 	t.Execute(response, value)
 }
 func DisplayAllHTMLResponse(response http.ResponseWriter, value interface{}) {
@@ -25,7 +24,6 @@ func DisplayAllHTMLResponse(response http.ResponseWriter, value interface{}) {
 	fp, _ := filepath.Abs(".")
 	funcs := template.FuncMap{"add": add}
 	t := template.Must(template.New("allcars.html").Funcs(funcs).ParseFiles(fp + "/assets/allcars.html"))
-	// fmt.Println(fp + "/assets/allCars.html")
 	t.Execute(response, value)
 }
 

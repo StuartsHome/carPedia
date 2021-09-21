@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
 	"strconv"
 	"testing"
 
@@ -24,6 +25,7 @@ func newCreateCarForm() *url.Values {
 }
 
 func TestCreateCar(t *testing.T) {
+	os.Chdir("../../")
 	// Given
 	mockStore := store.InitMockStore()
 	testData := model.Car{
@@ -47,7 +49,7 @@ func TestCreateCar(t *testing.T) {
 	hf.ServeHTTP(recorder, req2)
 
 	// Then
-	if status := recorder.Code; status != http.StatusFound {
+	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}

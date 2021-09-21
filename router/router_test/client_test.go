@@ -50,39 +50,6 @@ func TestHealthCheckHandler(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestStaticFileServer(t *testing.T) {
-	if err := os.Chdir("../"); err != nil {
-		panic(err)
-	}
-	// os.Setenv()
-	r := router.NewRouter()
-
-	mockServer := httptest.NewServer(r)
-	// defer mockServer.Close()
-	// mockServer.URL = "http://127.0.0.1:8100"
-
-	// request, err := http.NewRequest("GET", mockServer.URL+"/assets/", nil)
-	// request.Header.Set("Accept", "text/html; charset=utf-8")
-	// client := http.Client{}
-	// response, _ := client.Do(request)
-
-	response, err := http.Get(mockServer.URL + "/assets/")
-	t.Log(response.Request.URL)
-	t.Log(response.Header)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if response.StatusCode != http.StatusOK {
-		t.Errorf("Status should be %d, got %d", http.StatusOK, response.StatusCode)
-	}
-
-	contentType := response.Header.Get("Content-Type")
-	expectedContentType := "text/html; charset=utf-8"
-
-	assert.Equal(t, expectedContentType, contentType)
-}
-
 func TestRouter(t *testing.T) {
 	if err := os.Chdir("../"); err != nil {
 		panic(err)

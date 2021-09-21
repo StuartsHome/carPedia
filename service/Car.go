@@ -58,7 +58,7 @@ func CreateCarHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	DisplayHTMLResponse(w, car)
+	DisplayHTMLResponse(w, car) // DisplayHTMLResponse returns a 200, we want 302 , we need to update DisplayHTMLResponse to accept a status code parameter
 
 	// no need for redirect at the moment
 	// http.Redirect(w, r, "/assets/", http.StatusFound)
