@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/stuartshome/carpedia/cache"
@@ -20,6 +21,7 @@ var (
 		descService DescService = NewDescService()
 	*/
 	descService DescService
+	descCache   cache.DescCache
 )
 
 type service struct{}
@@ -65,8 +67,9 @@ func (*controller) AddDesc(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(errors.ServiceError{Message: "error saving description"})
-
 	}
+
+	descCache.Set(strconv.FormatInt(desc.Id, 10), &desc)
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(&result)
 }
@@ -88,7 +91,15 @@ func (*controller) GetPostByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (*controller) GetDesc(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("Content-Type", "application/json")
+	descs, err := descService.FindAll()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: "error getting the descs"})
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(&descs)
 }
 
 func (*service) Validate(desc *cache.Desc) error {
