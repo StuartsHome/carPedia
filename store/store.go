@@ -66,7 +66,7 @@ func (store *DbStore) UpdateCar(car *model.Car) error {
 
 // description methods
 func (store *DbStore) CreateDesc(desc *cache.Desc) error {
-	_, err := store.Db.Query("INSERT INTO descs (title, text) VALUES (?,?)", desc.Text, desc.Title)
+	_, err := store.Db.Query("INSERT INTO descs (id, title, text) VALUES (?,?,?)", desc.Id, desc.Text, desc.Title)
 	logging.Logf("storing in db: %v & %v", desc.Title, desc.Text)
 	return err
 }

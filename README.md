@@ -65,3 +65,8 @@ Populate cache
 ```
 curl -X POST -d 'exampleRequests/populateCache.json' http://localhost:8100/desc
 ```
+
+Get cache descs
+```
+curl -X GET http://localhost:8100/desc
+```

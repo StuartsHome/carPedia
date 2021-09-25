@@ -14,7 +14,7 @@ import (
 
 var (
 	descService    service.DescService    = service.NewDescService()
-	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 0, 10)
+	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 1, 10)
 	descController service.DescController = service.NewDescController(descService, descCache)
 	// descRepository reposi
 )
@@ -39,7 +39,7 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/results", service.GetSingleCarHandler).Methods("POST")
 
 	// description handlers used by cache
-	r.HandleFunc("/desc", descController.GetDesc).Methods("GET")
+	r.HandleFunc("/desc", descController.GetDescs).Methods("GET")
 	r.HandleFunc("/desc/{id}", descController.GetDescByID).Methods("GET")
 	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
 
