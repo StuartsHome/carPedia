@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/stuartshome/carpedia/cache"
 	"github.com/stuartshome/carpedia/logging"
 	"github.com/stuartshome/carpedia/model"
 )
@@ -60,6 +61,17 @@ func (store *DbStore) DeleteCar(car *model.Car) error {
 func (store *DbStore) UpdateCar(car *model.Car) error {
 	_, err :=
 		store.Db.Exec("UPDATE cars SET make=$1, model=$2 WHERE id=$3", car.Make, car.Model)
+	return err
+}
+
+// description methods
+func (store *DbStore) CreateDesc(desc *cache.Desc) error {
+	_, err := store.Db.Query("INSERT INTO descs (title, text) VALUES (?,?)", desc.Text, desc.Title)
+	logging.Logf("storing in db: %v & %v", desc.Title, desc.Text)
+	return err
+}
+func (store *DbStore) DeleteDesc(desc *cache.Desc) error {
+	_, err := store.Db.Exec("DELETE FROM descs WHERE id=$1", desc.Id)
 	return err
 }
 

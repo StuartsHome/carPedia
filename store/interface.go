@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/stuartshome/carpedia/cache"
 	"github.com/stuartshome/carpedia/model"
 	"github.com/stuartshome/carpedia/settings"
 )
@@ -16,6 +17,9 @@ type Store interface {
 	GetCar(*model.Car) (*model.Car, error)
 	UpdateCar(car *model.Car) error
 	DeleteCar(car *model.Car) error
+
+	CreateDesc(desc *cache.Desc) error
+	DeleteDesc(desc *cache.Desc) error
 }
 
 func DbStartup() {

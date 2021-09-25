@@ -32,3 +32,17 @@ INSERT INTO car_pedia.carMake (make, description) VALUES
 ('vw', 'german car manafacturer'),
 ('land rover', 'british car manafacturer'),
 ('seat', 'spanish car manafacturer');
+
+DROP TABLE IF EXISTS car_pedia.descs;
+CREATE TABLE car_pedia.descs (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(256),
+  text VARCHAR(256)
+);
+
+INSERT INTO car_pedia.descs (title, text) VALUES
+('title in', 'title in1'),
+('title do', 'title do1'),
+('title se', 'title se1'),
+('tt', 'tt1'),
+('title dummy test', 'title dummy test1');

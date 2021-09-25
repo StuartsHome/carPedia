@@ -58,3 +58,10 @@ Transfer rate per second:               15148168.90 Byte/s (15.15 MByte/s)
 50X Responses:          0       (0.00%)
 Errors:                 0       (0.00%)
 ```
+
+
+## Examples
+Populate cache
+```
+curl -X POST -d 'exampleRequests/populateCache.json' http://localhost:8100/desc
+```

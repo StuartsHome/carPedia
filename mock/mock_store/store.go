@@ -4,6 +4,8 @@ package mock_store
 
 import (
 	mock "github.com/stretchr/testify/mock"
+	cache "github.com/stuartshome/carpedia/cache"
+
 	model "github.com/stuartshome/carpedia/model"
 )
 
@@ -26,6 +28,20 @@ func (_m *Store) CreateCar(car *model.Car) error {
 	return r0
 }
 
+// CreateDesc provides a mock function with given fields: desc
+func (_m *Store) CreateDesc(desc *cache.Desc) error {
+	ret := _m.Called(desc)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*cache.Desc) error); ok {
+		r0 = rf(desc)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // DeleteCar provides a mock function with given fields: car
 func (_m *Store) DeleteCar(car *model.Car) error {
 	ret := _m.Called(car)
@@ -33,6 +49,20 @@ func (_m *Store) DeleteCar(car *model.Car) error {
 	var r0 error
 	if rf, ok := ret.Get(0).(func(*model.Car) error); ok {
 		r0 = rf(car)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// DeleteDesc provides a mock function with given fields: desc
+func (_m *Store) DeleteDesc(desc *cache.Desc) error {
+	ret := _m.Called(desc)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*cache.Desc) error); ok {
+		r0 = rf(desc)
 	} else {
 		r0 = ret.Error(0)
 	}

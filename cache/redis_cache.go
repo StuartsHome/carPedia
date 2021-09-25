@@ -13,7 +13,7 @@ type redisCache struct {
 	expires time.Duration
 }
 
-func NewRedisCache(host string, db int, exp time.Duration) DescCache {
+func NewRedisCache(host string, db int, exp time.Duration) RedisCache {
 	return &redisCache{
 		host:    host,
 		db:      db,

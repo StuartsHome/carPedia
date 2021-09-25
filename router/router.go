@@ -7,13 +7,16 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/gorilla/mux"
+	"github.com/stuartshome/carpedia/cache"
 	"github.com/stuartshome/carpedia/service"
 	"github.com/stuartshome/carpedia/service/concurrent_service"
 )
 
 var (
 	descService    service.DescService    = service.NewDescService()
-	descController service.DescController = service.NewDescController(descService)
+	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 0, 10)
+	descController service.DescController = service.NewDescController(descService, descCache)
+	// descRepository reposi
 )
 
 func NewRouter() *mux.Router {
@@ -36,8 +39,9 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/results", service.GetSingleCarHandler).Methods("POST")
 
 	// description handlers used by cache
-	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
 	r.HandleFunc("/desc", descController.GetDesc).Methods("GET")
+	r.HandleFunc("/desc/{id}", descController.GetDescByID).Methods("GET")
+	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
 
 	// user
 	r.HandleFunc("/user", concurrent_service.UserHandler).Methods("GET")

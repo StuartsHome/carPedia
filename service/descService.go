@@ -21,11 +21,23 @@ var (
 		descService DescService = NewDescService()
 	*/
 	descService DescService
-	descCache   cache.DescCache
+	descCache   cache.RedisCache
 )
 
 type service struct{}
 type controller struct{}
+type DescController interface {
+	GetDesc(w http.ResponseWriter, r *http.Request)
+	AddDesc(w http.ResponseWriter, r *http.Request)
+	GetDescByID(w http.ResponseWriter, r *http.Request)
+}
+
+// constructor service
+func NewDescController(service DescService, cache cache.RedisCache) DescController {
+	descService = service
+	descCache = cache
+	return &controller{}
+}
 
 type DescService interface {
 	Validate(desc *cache.Desc) error
@@ -37,19 +49,8 @@ func NewDescService() DescService {
 	return &service{}
 }
 
-type DescController interface {
-	GetDesc(w http.ResponseWriter, r *http.Request)
-	AddDesc(w http.ResponseWriter, r *http.Request)
-}
-
-// constructor service
-func NewDescController(service DescService) DescController {
-	descService = service
-	return &controller{}
-}
-
 func (*controller) AddDesc(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	var desc cache.Desc
 	err := json.NewDecoder(r.Body).Decode(&desc)
 	if err != nil {
@@ -62,32 +63,40 @@ func (*controller) AddDesc(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(errors.ServiceError{Message: err.Error()})
 	}
-
-	result, err := descService.Create(&desc)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(errors.ServiceError{Message: "error saving description"})
-	}
+	desc.Id = rand.Int63()
+	// Stores in mysqlDB - Don't think this is needed
+	// result, err := descService.Create(&desc)
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	json.NewEncoder(w).Encode(errors.ServiceError{Message: "error saving description"})
+	// }
 
 	descCache.Set(strconv.FormatInt(desc.Id, 10), &desc)
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(&result)
+	json.NewEncoder(w).Encode(&desc)
 }
 
 // First step, not currently working. More to do!
-func (*controller) GetPostByID(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	postID := strings.Split(r.URL.Path, "/")[2]
-	fmt.Println(postID)
-	// post, err := descService.FindById(postID)
-	// if err != nil {
-	// 	w.WriteHeader(http.StatusNotFound)
-	// 	json.NewEncoder(w).Encode(errors.ServiceError{Message: "no posts found!"})
-	// } else {
-	// 	w.WriteHeader(http.StatusOK)
-	// 	json.NewEncoder(w).Encode(post)
-	// }
+func (*controller) GetDescByID(w http.ResponseWriter, r *http.Request) {
+	// If desc is in the cache we'll retrieve it
+	// if not, we'll use the sqlStoreDB
 
+	w.Header().Set("Content-Type", "application/json")
+	descID := strings.Split(r.URL.Path, "/")[2]
+	var desc = descCache.Get(descID)
+	// if no item in cache
+	if desc == nil {
+		// create function to get desc from sql db
+		// if  != nil {
+
+		// }
+		descCache.Set(descID, nil)
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(nil)
+	} else {
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(nil)
+	}
 }
 
 func (*controller) GetDesc(w http.ResponseWriter, r *http.Request) {
@@ -119,7 +128,7 @@ func (*service) Validate(desc *cache.Desc) error {
 
 func (*service) Create(desc *cache.Desc) (*cache.Desc, error) {
 	desc.Id = rand.Int63()
-	// return repo.Save(desc)
+
 	return nil, nil
 }
 func (*service) FindAll() ([]*cache.Desc, error) {
