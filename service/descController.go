@@ -28,6 +28,7 @@ type controller struct{}
 type DescController interface {
 	GetDescs(w http.ResponseWriter, r *http.Request)
 	AddDesc(w http.ResponseWriter, r *http.Request)
+	AddDescs(w http.ResponseWriter, r *http.Request)
 	GetDescByID(w http.ResponseWriter, r *http.Request)
 }
 
@@ -61,6 +62,32 @@ func (*controller) AddDesc(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(&desc)
+}
+func (*controller) AddDescs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	var descs []*cache.Desc
+	err := json.NewDecoder(r.Body).Decode(&descs)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		// w.Write([]byte(`{"error": "Error unmarshalling data"}`))
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: "error getting the posts"})
+		return
+	}
+	// if err := descService.Validate(&descs); err != nil {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	json.NewEncoder(w).Encode(errors.ServiceError{Message: err.Error()})
+	// }
+
+	for _, desc := range descs {
+		desc.Id = rand.Int63()
+		// Add desc to cache, may need a method to check if desc is already in cache
+		AddDescCache(desc)
+		// Add desc to mysqlStore
+		store.PackStore.CreateDesc(desc)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(descs)
 }
 
 func (*controller) GetDescByID(w http.ResponseWriter, r *http.Request) {

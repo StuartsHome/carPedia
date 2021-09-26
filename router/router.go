@@ -42,6 +42,7 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/desc", descController.GetDescs).Methods("GET")
 	r.HandleFunc("/desc/{id}", descController.GetDescByID).Methods("GET")
 	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
+	r.HandleFunc("/descs", descController.AddDescs).Methods("POST")
 
 	// user
 	r.HandleFunc("/user", concurrent_service.UserHandler).Methods("GET")

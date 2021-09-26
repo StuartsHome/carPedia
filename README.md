@@ -61,12 +61,17 @@ Errors:                 0       (0.00%)
 
 
 ## Examples
-Populate cache
+Populate cache with one key
 ```
 curl -X POST -d '@exampleRequests/populateCache.json' http://localhost:8100/desc
 ```
 
+Populate cache with multiple keys
+```
+curl -X POST -d '@exampleRequests/multiplePopulateCache.json' http://localhost:8100/descs
+```
+
 Get cache descs
 ```
-curl -X GET http://localhost:8100/desc
+curl -X GET -H "Content-type: application/json" http://localhost:8100/desc
 ```
