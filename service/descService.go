@@ -56,7 +56,7 @@ func GetDescByIDCache(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetDescsCache() ([]*cache.Desc, error) {
-	descs, err := descService.FindAll()
+	descs, err := descCache.GetAll()
 	if err != nil {
 		return []*cache.Desc{}, err
 	}

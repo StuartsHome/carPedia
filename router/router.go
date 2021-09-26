@@ -14,7 +14,7 @@ import (
 
 var (
 	descService    service.DescService    = service.NewDescService()
-	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 1, 10)
+	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 0, 10)
 	descController service.DescController = service.NewDescController(descService, descCache)
 	// descRepository reposi
 )

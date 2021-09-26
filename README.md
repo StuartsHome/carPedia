@@ -63,7 +63,7 @@ Errors:                 0       (0.00%)
 ## Examples
 Populate cache
 ```
-curl -X POST -d 'exampleRequests/populateCache.json' http://localhost:8100/desc
+curl -X POST -d '@exampleRequests/populateCache.json' http://localhost:8100/desc
 ```
 
 Get cache descs

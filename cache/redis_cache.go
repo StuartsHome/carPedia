@@ -2,6 +2,7 @@ package cache
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/go-redis/redis/v7"
@@ -31,6 +32,8 @@ func (cache *redisCache) getClient() *redis.Client {
 
 func (cache *redisCache) Set(key string, value *Desc) {
 	client := cache.getClient()
+	pong, err := client.Ping().Result()
+	fmt.Println(pong, err)
 
 	json, err := json.Marshal(value)
 	if err != nil {
@@ -43,6 +46,8 @@ func (cache *redisCache) Set(key string, value *Desc) {
 }
 func (cache *redisCache) Get(key string) *Desc {
 	client := cache.getClient()
+	pong, err := client.Ping().Result()
+	fmt.Println(pong, err)
 
 	val, err := client.Get(key).Result()
 	if err != nil {
@@ -54,4 +59,26 @@ func (cache *redisCache) Get(key string) *Desc {
 		panic(err)
 	}
 	return &post
+}
+
+var cursor uint64
+var n int
+
+func (cache *redisCache) GetAll() ([]*Desc, error) {
+	var data []*Desc
+	client := cache.getClient()
+	pong, err := client.Ping().Result()
+	fmt.Println(pong, err)
+
+	keys, _, err := client.Scan(cursor, "*", 10).Result()
+	if err != nil {
+		return nil, err
+	}
+	n += len(keys)
+	for _, keyVal := range keys {
+		tempData := cache.Get(keyVal)
+		data = append(data, tempData)
+	}
+
+	return data, nil
 }
