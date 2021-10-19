@@ -19,7 +19,6 @@ func GetCarHandler(w http.ResponseWriter, r *http.Request) {
 	// Call store GetCars()
 	// Marshal the value into JSON
 	// Write the JSON to the Response
-
 	cars, err := store.PackStore.GetCars()
 	if err != nil {
 		fmt.Println(fmt.Errorf("error: %v", err))

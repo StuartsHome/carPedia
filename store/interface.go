@@ -20,6 +20,7 @@ type Store interface {
 
 	CreateDesc(desc *cache.Desc) error
 	DeleteDesc(desc *cache.Desc) error
+	GetAllDescs() ([]*cache.Desc, error)
 }
 
 func DbStartup() {

@@ -14,9 +14,8 @@ import (
 
 var (
 	descService    service.DescService    = service.NewDescService()
-	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 0, 10)
+	descCache      cache.RedisCache       = cache.NewRedisCache("localhost:6379", 0, 100000)
 	descController service.DescController = service.NewDescController(descService, descCache)
-	// descRepository reposi
 )
 
 func NewRouter() *mux.Router {
@@ -43,6 +42,9 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/desc/{id}", descController.GetDescByID).Methods("GET")
 	r.HandleFunc("/desc", descController.AddDesc).Methods("POST")
 	r.HandleFunc("/descs", descController.AddDescs).Methods("POST")
+
+	// get descriptions from db instead of cache
+	r.HandleFunc("/descdb", descController.GetAllDescsFromDb).Methods("GET")
 
 	// user
 	r.HandleFunc("/user", concurrent_service.UserHandler).Methods("GET")

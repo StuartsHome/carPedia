@@ -30,6 +30,7 @@ type DescController interface {
 	AddDesc(w http.ResponseWriter, r *http.Request)
 	AddDescs(w http.ResponseWriter, r *http.Request)
 	GetDescByID(w http.ResponseWriter, r *http.Request)
+	GetAllDescsFromDb(w http.ResponseWriter, r *http.Request)
 }
 
 // constructor service
@@ -100,16 +101,18 @@ func (*controller) GetDescByID(w http.ResponseWriter, r *http.Request) {
 	// if no item in cache
 	if desc == nil {
 		// create function to get desc from sql db
-		// if  != nil {
 
-		// }
 		descCache.Set(descID, nil)
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(nil)
 	} else {
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(nil)
+		json.NewEncoder(w).Encode(desc)
 	}
+}
+
+func GetSingleDescFromDB() {
+
 }
 
 func (*controller) GetDescs(w http.ResponseWriter, r *http.Request) {
@@ -122,4 +125,17 @@ func (*controller) GetDescs(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(&descs)
+}
+
+func (*controller) GetAllDescsFromDb(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	descs, err := store.PackStore.GetAllDescs()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: "error getting the descs"})
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(&descs)
+
 }

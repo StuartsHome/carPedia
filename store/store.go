@@ -75,6 +75,24 @@ func (store *DbStore) DeleteDesc(desc *cache.Desc) error {
 	return err
 }
 
+func (store *DbStore) GetAllDescs() ([]*cache.Desc, error) {
+	rows, err := store.Db.Query("SELECT title, text from descs")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	descs := []*cache.Desc{}
+	for rows.Next() {
+		desc := &cache.Desc{}
+		if err := rows.Scan(&desc.Title, &desc.Text); err != nil {
+			return nil, err
+		}
+		descs = append(descs, desc)
+	}
+	return descs, nil
+}
+
 // Package level variable that will be available for use
 // throughout our application code.
 var PackStore Store

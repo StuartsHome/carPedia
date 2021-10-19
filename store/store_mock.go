@@ -72,6 +72,15 @@ func (m *MockStore) DeleteDesc(desc *cache.Desc) error {
 	return rets.Error(0)
 }
 
+func (m *MockStore) GetAllDescs() ([]*cache.Desc, error) {
+	/*
+		Since `rets.Get()` is a generic method, that returns whatever we pass to it,
+		we need to typecast it to the type we expect, which in this case is []*Car
+	*/
+	rets := m.Called()
+	return rets.Get(0).([]*cache.Desc), rets.Error(1)
+}
+
 func InitMockStore() *MockStore {
 	/*
 		Like the InitStore function we defined earlier, this function
