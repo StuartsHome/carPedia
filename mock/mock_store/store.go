@@ -70,6 +70,29 @@ func (_m *Store) DeleteDesc(desc *cache.Desc) error {
 	return r0
 }
 
+// GetAllDescs provides a mock function with given fields:
+func (_m *Store) GetAllDescs() ([]*cache.Desc, error) {
+	ret := _m.Called()
+
+	var r0 []*cache.Desc
+	if rf, ok := ret.Get(0).(func() []*cache.Desc); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]*cache.Desc)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func() error); ok {
+		r1 = rf()
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetCar provides a mock function with given fields: _a0
 func (_m *Store) GetCar(_a0 *model.Car) (*model.Car, error) {
 	ret := _m.Called(_a0)
