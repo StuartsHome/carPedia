@@ -12,6 +12,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/stuartshome/carpedia-client v0.0.0-20211104191415-6b7ce78ff20d // indirect
 	github.com/vektra/mockery v1.1.2 // indirect
 	github.com/vektra/mockery/v2 v2.9.0 // indirect
 )

@@ -3,6 +3,7 @@ package service
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -46,4 +47,9 @@ func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 
 	// write the json payload to the body
 	w.Write(buffer.Bytes())
+}
+
+// TODO: add new rate struct, create new func to process the available rate limits
+func RateLimitHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "rate limit endpoint hit")
 }

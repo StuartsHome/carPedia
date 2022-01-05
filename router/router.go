@@ -59,17 +59,13 @@ func NewRouter() *mux.Router {
 	// healthcheck
 	r.HandleFunc("/health", service.HealthCheckHandler).Methods("GET")
 
-	// http.ListenAndServe(*config.HttpSettings.ListenAddress, r)
-	return r
+	// rate limits
+	r.HandleFunc("/rate_limit", service.RateLimitHandler).Methods("GET")
 
+	return r
 }
 
 func Router() {
-
-	// config := settings.Get()
 	r := NewRouter()
-
-	// http.ListenAndServe(":8100", r)
 	log.Println(http.ListenAndServe(":8100", r))
-
 }

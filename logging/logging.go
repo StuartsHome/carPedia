@@ -67,7 +67,7 @@ func (logger *Logger) setOutput() {
 }
 
 // Functions accessible outside the package that
-// don't require a logger method
+// don't require a logger method.
 func Logf(format string, messages ...interface{}) {
 	globalLogger.logf(format, messages...)
 }

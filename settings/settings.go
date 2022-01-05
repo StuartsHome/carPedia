@@ -3,7 +3,6 @@ package settings
 import (
 	"flag"
 	"log"
-	"os"
 	"sync"
 
 	"github.com/caarlos0/env"
@@ -15,7 +14,7 @@ type HTTPEnvSettings struct {
 	Port    string `env:"HTTP_PORT" envDefault:":8100"`
 	TlsCert string `env:"TLS_CERT" envDefault:""`
 	TlsKey  string `env:"TLS_KEY" envDefault:""`
-	IsDev   string `env:"IS_DEV" envDefault:""`
+	IsDev   string `env:"IS_DEV" envDefault:"true"`
 }
 
 type DatabaseCreds struct {
@@ -65,7 +64,7 @@ func (s *Settings) init() {
 		}
 	}
 
-	// Database creds
+	// Database credentials.
 	if err := env.Parse(&s.DatabaseCreds); err != nil {
 		logging.Logf("problem with parsing DatabaseCreds: %v", err)
 	}
@@ -74,19 +73,6 @@ func (s *Settings) init() {
 	if err != nil {
 		log.Fatalf("error loading .env file")
 	}
-	if *s.HttpSettings.IsDev == "true" {
-		logging.Log("hit")
-		s.DatabaseCreds.DBName = os.Getenv("MYSQL_DATABASE")
-		s.DatabaseCreds.DBPass = os.Getenv("PASS")
-		s.DatabaseCreds.DBUser = os.Getenv("MYSQL_USER")
-	}
-	// if !s.HttpSettings.IsDev {
-	// 	err := godotenv.Load("script_config.env")
-
-	// 	s.DatabaseCreds.DBName = os.Getenv("MYSQL_DATABASE")
-	// 	s.DatabaseCreds.DBPass = os.Getenv("PASS")
-	// 	s.DatabaseCreds.DBUser = os.Getenv("MYSQL_USER")
-	// }
 }
 
 func (s *Settings) logSettings() {
